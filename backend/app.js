@@ -23,8 +23,9 @@ const connection = mongoose.connection;
 connection.once('open', () => { console.log('Database connection established succesfully')});
 
 const userRouter = require('./routes/users');
+const universityRouter = require('./routes/universities')
 app.use('/api/', userRouter);
-
+app.use('/api/university',universityRouter);
 
 app.listen(port, () => { console.log(`Server is running on port : ${port}`)});
 
@@ -54,7 +55,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  * /api/changePassword
  * /api/changeEmail
  * /api/logout
- * 
+ * /api/university/rate
  * @swagger
  * /api/profile:
  *    get:
@@ -107,6 +108,43 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  *               type: string
  *             password:
  *               type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
+/**
+ * @swagger
+ * /api/university/rate:
+ *      
+ *   post:
+ *     tags : ['University']
+ *     summary: Rate university.
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: University Id
+ *         type: string
+ *       - in: body
+ *         name: Rates
+ *         description: Rates of user
+ *         schema:
+ *           type: object
+ *           required:
+ *             - edu_point
+ *             - dorm_point
+ *             - trans_point
+ *             - campus_point
+ *           properties:
+ *             edu_point:
+ *               type: number
+ *             dorm_point:
+ *               type: number
+ *             trans_point:
+ *               type: number
+ *             campus_point:
+ *               type: number
  *     responses:
  *       201:
  *         description: Created
