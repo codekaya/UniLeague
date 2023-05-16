@@ -114,6 +114,27 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
+ * /api/show_comments:
+ *      
+ *   get:
+ *     tags : ['Account']
+ *     summary: Show user comments.
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: User Id
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request   
+ */
+/**
+/**
+ * @swagger
  * /api/university/rate:
  *      
  *   post:
@@ -145,6 +166,133 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  *               type: number
  *             campus_point:
  *               type: number
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request   
+ */
+/**
+ * @swagger
+ * /api/university/new_comment:
+ *   post:
+ *     tags:
+ *       - University
+ *     summary: Create a new comment
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: Comment
+ *         description: Post New Comment
+ *         schema:
+ *           type: object
+ *           required:
+ *             - username
+ *             - content
+ *             - uni_id
+ *             - user_id
+ *           properties:
+ *             username:
+ *               type: string
+ *             content:
+ *               type: string
+ *             uni_id:
+ *               type: string
+ *             user_id:
+ *               type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request
+ */
+/**
+ * @swagger
+ * /api/university/like_comment:
+ *   post:
+ *     tags:
+ *       - University
+ *     summary: Like comment
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: Comment Id
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request
+ */
+/**
+ * /**
+ * @swagger
+ * /api/university/dislike_comment:
+ *   post:
+ *     tags:
+ *       - University
+ *     summary: Dislike comment
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: Comment Id
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request
+ */
+/**
+ * @swagger
+ * /api/university/show_comments:
+ *      
+ *   get:
+ *     tags : ['University']
+ *     summary: Show university comments.
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: University Id
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request   
+ */
+/**
+/**
+ * @swagger
+ * /api/university/delete_comment:
+ *      
+ *   post:
+ *     tags : ['University']
+ *     summary: Delete university comment.
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: Comment Id
+ *         type: string
+ *       - in: body
+ *         name: User id
+ *         description: Commented user id
+ *         schema:
+ *           type: object
+ *           required:
+ *             - commented_by_id
+ *           properties:
+ *             commented_by_id:
+ *               type: string
  *     responses:
  *       200:
  *         description: Success

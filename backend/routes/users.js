@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
+let Comment =  require('../models/comment.model');
 const { register, login, changePassword, changeEmail} = require('../controllers/user');
 const {isValidated} = require('../controllers/jwt')
 const {sign, verify} = require('jsonwebtoken');
@@ -35,6 +36,22 @@ router.route('/profile').get(async (req, res) => {
         const error = e;
         res.send({success: false, error: error })  
     }
+});
+
+router.route('/show_comments').get(async (req,res)=>{
+
+    try {
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+
+        const comments = await Comment.find({ user_id: req.query.id });
+        res.send(comments)
+    } catch (e) {
+        console.log(e)
+        const error = e;
+        res.send({success: false, error: error }).status(400)   
+    }
+
 })
 
 
@@ -71,8 +88,7 @@ router.route('/changePassword').post(async (req, res) => {
     } catch (e) {
         const error = e;
         res.send({success: false, error: error })
-    }
-        
+    }  
 });
 
 router.route('/resetPassword').post(async (req, res) => {
