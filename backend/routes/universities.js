@@ -3,6 +3,15 @@ let University = require('../models/university.model');
 const {isValidated} = require('../controllers/jwt')
 const {sign, verify} = require('jsonwebtoken');
 
+router.route('/').get(async (req,res)=>{
+    try {
+        const result = await University.findById(req.query.id)
+        res.send(result);
+    } catch (e) {
+        const error = e;
+        res.send({success: false, error: error }).status(400)   
+    }
+})
 
 router.route('/rate').post(async (req,res)=>{
     try {
@@ -25,5 +34,7 @@ router.route('/rate').post(async (req,res)=>{
         res.send({success: false, error: error }).status(400)   
     }
 })
+
+
 
 module.exports = router;

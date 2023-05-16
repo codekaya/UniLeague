@@ -146,8 +146,30 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  *             campus_point:
  *               type: number
  *     responses:
- *       201:
- *         description: Created
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request   
+ */
+/**
+ * @swagger
+ * /api/university:
+ *      
+ *   get:
+ *     tags : ['University']
+ *     summary: Get university.
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: University Id
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request   
  */
 /**
  * @swagger
