@@ -4,6 +4,7 @@ let Comment =  require('../models/comment.model');
 let User = require('../models/user.model');
 const {isValidated} = require('../controllers/jwt')
 const {sign, verify} = require('jsonwebtoken');
+const { unix } = require('moment');
 
 
 
@@ -21,8 +22,18 @@ router.route('/rate').post(async (req,res)=>{
     try {
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);
-        //Kullanıcının daha önce ratelememiş olması kontrol edilmeli
-        //const user = await User.findOne( {_id: token.id});
+     
+        const user = await User.findOne( {_id: token.id});
+        const uni = await University.findById({ _id: req.query.id })
+
+
+
+        user.ratingUnis.forEach((uniId) => {
+            if (uniId == uni._id.toString()){
+                res.send({ success: false, message: 'Already voted this university.' });
+            }
+        })
+        
         const result = await University.findOneAndUpdate({_id : req.query.id},{
             $inc : {
                 edu_point : req.body.edu_point,
@@ -33,6 +44,10 @@ router.route('/rate').post(async (req,res)=>{
             }
         }, { new: true })
         res.send(result);
+        
+        user.ratingUnis.push(uni._id.toString())
+        await user.save();
+        
     } catch (e) {
         const error = e;
         res.send({success: false, error: error }).status(400)   
@@ -46,7 +61,13 @@ router.route('/new_comment').post(async (req,res)=>{
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);
         
-        const { username, content, uni_id, user_id } = req.body;
+        const { username, content,} = req.body;
+
+        const user = await User.findOne( {_id: token.id});
+        user_id = user._id
+
+        const uni = await University.findById(req.query.id)
+        uni_id = uni._id
 
         const comment = new Comment({
           username,
@@ -55,10 +76,12 @@ router.route('/new_comment').post(async (req,res)=>{
           user_id
         });
 
+    
         const savedComment = await comment.save();
         res.send(savedComment);
     } catch (e) {
         const error = e;
+        console.log(e)
         res.send({success: false, error: error }).status(400)   
     }
 
@@ -118,11 +141,18 @@ router.route('/dislike_comment').post(async (req,res)=>{
 
 router.route('/delete_comment').post(async (req,res)=>{
 
-    try {
-        const comment = await Comment.findById({_id : req.query.id});
-        const { commented_by_id } = req.body;
 
-        if (commented_by_id === comment.user_id) {
+    const accessToken = req.cookies["access-token"];
+    const token = verify(accessToken , process.env.JWT_SECRET);
+    const user = await User.findOne( {_id: token.id});
+
+    try {
+
+    
+        const comment = await Comment.findById({_id : req.query.id});
+        
+        if (user.id === comment.user_id) {
+            
             await Comment.findByIdAndDelete(req.query.id);
             res.send({ success: true, message: 'Kayıt silindi.' });
           } else {
@@ -136,8 +166,6 @@ router.route('/delete_comment').post(async (req,res)=>{
     }
 
 })
-
-
 
 
 module.exports = router;

@@ -20,6 +20,11 @@ const userSchema = new Schema({
         type: Boolean,
         reuired: true,
         default: false
+    },
+    ratingUnis:{
+       type: Array,
+       required: true,
+       default: []
     }
 }
 ); 

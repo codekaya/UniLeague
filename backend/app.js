@@ -182,6 +182,10 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  *     consumes:
  *       - application/json
  *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: University Id
+ *         type: string
  *       - in: body
  *         name: Comment
  *         description: Post New Comment
@@ -190,16 +194,10 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  *           required:
  *             - username
  *             - content
- *             - uni_id
- *             - user_id
  *           properties:
  *             username:
  *               type: string
  *             content:
- *               type: string
- *             uni_id:
- *               type: string
- *             user_id:
  *               type: string
  *     responses:
  *       200:
@@ -283,16 +281,6 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  *         name: id
  *         description: Comment Id
  *         type: string
- *       - in: body
- *         name: User id
- *         description: Commented user id
- *         schema:
- *           type: object
- *           required:
- *             - commented_by_id
- *           properties:
- *             commented_by_id:
- *               type: string
  *     responses:
  *       200:
  *         description: Success
