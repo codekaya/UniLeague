@@ -34,8 +34,8 @@ const universityRouter = require('./routes/universities')
 const homeRouter = require('./routes/home')
 
 app.use('/api/', userRouter);
-app.use('/api/university',universityRouter);
-app.use('/api/home',homeRouter)
+app.use('/university',universityRouter);
+app.use('/',homeRouter)
 
 app.listen(port, () => { console.log(`Server is running on port : ${port}`)});
 
@@ -65,7 +65,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  * /api/changePassword
  * /api/changeEmail
  * /api/logout
- * /api/university/rate
+ * /university/rate
  * @swagger
  * /api/profile:
  *    get:
@@ -145,7 +145,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 /**
 /**
  * @swagger
- * /api/university/rate:
+ * /university/rate:
  *      
  *   post:
  *     tags : ['University']
@@ -184,7 +184,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
- * /api/university/new_comment:
+ * /university/new_comment:
  *   post:
  *     tags:
  *       - University
@@ -217,8 +217,8 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
- * /api/university/like_comment:
- *   post:
+ * /university/like_comment:
+ *   get:
  *     tags:
  *       - University
  *     summary: Like comment
@@ -238,8 +238,8 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 /**
  * /**
  * @swagger
- * /api/university/dislike_comment:
- *   post:
+ * /university/dislike_comment:
+ *   get:
  *     tags:
  *       - University
  *     summary: Dislike comment
@@ -258,7 +258,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
- * /api/university/show_comments:
+ * /university/show_comments:
  *      
  *   get:
  *     tags : ['University']
@@ -279,7 +279,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 /**
 /**
  * @swagger
- * /api/university/delete_comment:
+ * /university/delete_comment:
  *      
  *   post:
  *     tags : ['University']
@@ -299,7 +299,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
- * /api/university:
+ * /university:
  *      
  *   get:
  *     tags : ['University']

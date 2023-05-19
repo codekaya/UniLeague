@@ -37,7 +37,7 @@ router.route('/rate').post(async (req,res)=>{
         for (const uniId of user.ratingUnis) {
             if (uniId == uni._id.toString()) {
                 const uniId = req.query.id;
-                const redirectUrl = `/api/university/?id=${uniId}`;
+                const redirectUrl = `/university/?id=${uniId}`;
                 return res.send('<script>alert("You have already voted."); window.location.href="' + redirectUrl + '";</script>');
             }
         }
@@ -55,12 +55,15 @@ router.route('/rate').post(async (req,res)=>{
         user.ratingUnis.push(uni._id.toString())
         await user.save();
         const uniId = req.query.id;
-        const redirectUrl = `/api/university/?id=${uniId}`;
+        const redirectUrl = `/university/?id=${uniId}`;
         res.redirect(redirectUrl);
         
     } catch (e) {
+        if(e.name === 'JsonWebTokenError'){
+            redirectUrl = `/university/?id=${req.query.id}`;
+            return res.send('<script>alert("You need to login to rate universities."); window.location.href="' + redirectUrl + '";</script>');
+        }
         const error = e;
-        console.log(e)
         res.send({success: false, error: error }).status(400)   
     }
 })
@@ -70,13 +73,9 @@ router.route('/new_comment').post(async (req,res)=>{
     try {
     
         const accessToken = req.cookies["access-token"];
-        const token = verify(accessToken , process.env.JWT_SECRET);
-        
+        const token = verify(accessToken , process.env.JWT_SECRET);    
 
         const { username, content} = req.body;
-        
-       
-
 
         const user = await User.findOne( {_id: token.id});
         user_id = user._id
@@ -94,9 +93,13 @@ router.route('/new_comment').post(async (req,res)=>{
     
         const savedComment = await comment.save();
         const uniId = req.query.id;
-        const redirectUrl = `/api/university/?id=${uniId}`;
+        const redirectUrl = `/university/?id=${uniId}`;
         res.redirect(redirectUrl);
     } catch (e) {
+        if(e.name === 'JsonWebTokenError'){
+            redirectUrl = `/university/?id=${req.query.id}`;
+            return res.send('<script>alert("You need to login to post comment"); window.location.href="' + redirectUrl + '";</script>');
+        }
         const error = e;
         //console.log(e)
         res.send({success: false, error: error }).status(400)   
@@ -104,6 +107,7 @@ router.route('/new_comment').post(async (req,res)=>{
 
 })
 
+//Silinebilir.
 router.route('/show_comments').get(async (req,res)=>{
 
     try {
@@ -116,28 +120,30 @@ router.route('/show_comments').get(async (req,res)=>{
 
 })
 
+//Kullanıcı her commente sadece bir like veya bir dislike atabilmeli
 router.route('/like_comment').get(async (req,res)=>{
     try {
         
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);
-        
+
         const result = await Comment.findOneAndUpdate({_id : req.query.id},{
             $inc : {
                 like_count : 1
             }
         }, { new: true })
         const uniId = result.uni_id;
-        const redirectUrl = `/api/university/?id=${uniId}`;
+        const redirectUrl = `/university/?id=${uniId}`;
         res.redirect(redirectUrl);
         
     } catch (e) {
-        console.log(e)
+        //console.log(e)
         const error = e;
         res.send({success: false, error: error }).status(400)   
     }
 })
 
+//Kullanıcı her commente sadece bir like veya bir dislike atabilmeli
 router.route('/dislike_comment').get(async (req,res)=>{
     try {
     
@@ -151,30 +157,23 @@ router.route('/dislike_comment').get(async (req,res)=>{
         }, { new: true })
 
         const uniId = result.uni_id;
-        const redirectUrl = `/api/university/?id=${uniId}`;
+        const redirectUrl = `/university/?id=${uniId}`;
         res.redirect(redirectUrl);
         
     } catch (e) {
-        console.log(e)
+        //console.log(e)
         const error = e;
         res.send({success: false, error: error }).status(400)   
     }
 })
 
 router.route('/delete_comment').post(async (req,res)=>{
-
-
-    const accessToken = req.cookies["access-token"];
-    const token = verify(accessToken , process.env.JWT_SECRET);
-    const user = await User.findOne( {_id: token.id});
-
     try {
-
-    
-        const comment = await Comment.findById({_id : req.query.id});
-        
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+        const user = await User.findOne( {_id: token.id});
+        const comment = await Comment.findById({_id : req.query.id}); 
         if (user.id === comment.user_id) {
-            
             await Comment.findByIdAndDelete(req.query.id);
             res.send({ success: true, message: 'Kayıt silindi.' });
           } else {
@@ -182,7 +181,7 @@ router.route('/delete_comment').post(async (req,res)=>{
           }
 
     } catch (e) {
-        console.log(e)
+        //console.log(e)
         const error = e;
         res.send({success: false, error: error }).status(400)   
     }

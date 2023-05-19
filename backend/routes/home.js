@@ -19,4 +19,8 @@ router.route('/').get(async (req,res)=>{
     }
 })
 
+router.route('/login').get(async (req,res)=>{
+    res.render('login')
+})
+
 module.exports = router;

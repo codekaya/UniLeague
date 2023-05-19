@@ -21,12 +21,12 @@
 <%=  %>
 <script>
   function likeComment(commentId) {
-    const url = `http://127.0.0.1:5000/api/university/like_comment?id=${commentId}`;
+    const url = `http://127.0.0.1:5000/university/like_comment?id=${commentId}`;
     window.location.assign(url);
   }
 
   function dislikeComment(commentId) {
-    const url = `http://127.0.0.1:5000/api/university/dislike_comment?id=${commentId}`;
+    const url = `http://127.0.0.1:5000/university/dislike_comment?id=${commentId}`;
     window.location.assign(url);
   }
 </script>
@@ -71,7 +71,7 @@
       event.preventDefault(); // Formun otomatik olarak gönderilmesini engeller
       var form = event.target;
       var uniId = "?id=<%= uni_info._id %>";
-      var actionUrl = "/api/university/new_comment/" + uniId;
+      var actionUrl = "/university/new_comment/" + uniId;
       form.setAttribute("action", actionUrl);
       form.submit();
     });
@@ -80,7 +80,7 @@
       event.preventDefault(); // Formun otomatik olarak gönderilmesini engeller
       var form = event.target;
       var uniId = "?id=<%= uni_info._id %>";
-      var actionUrl = "/api/university/rate/" + uniId;
+      var actionUrl = "/university/rate/" + uniId;
       form.setAttribute("action", actionUrl);
       form.submit();
     });
