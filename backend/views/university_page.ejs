@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><%= uni_info.title %></h1>
+    <h2><%= uni_info.Region %></h2>
+    <h2><%= uni_info.Province %></h2>
+
+    <% comment_info.forEach(comment => { %>
+      <p><%= comment.content %> || <%= comment.like_count %> || <%= comment.dislike_count %>
+        <button onclick="likeComment('<%= comment.id %>')">Like</button>
+        <button onclick="dislikeComment('<%= comment.id %>')">Dislike</button>
+      </p>
+    <% }) %>
+
+<%=  %>
+<script>
+  function likeComment(commentId) {
+    const url = `http://127.0.0.1:5000/api/university/like_comment?id=${commentId}`;
+    window.location.assign(url);
+  }
+
+  function dislikeComment(commentId) {
+    const url = `http://127.0.0.1:5000/api/university/dislike_comment?id=${commentId}`;
+    window.location.assign(url);
+  }
+</script>
+
+
+
+    <h2>Kullanıcı Adı ve Metin Formu</h2>
+
+  <form id="commentForm" method="POST">
+    <label for="username">Kullanıcı Adı:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="content">Metin:</label><br>
+    <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>
+
+    <input type="submit" value="Gönder">
+  </form>
+  
+  <h2>Ratings</h2>
+  <form id="ratingForm" method="post">
+    <p>
+      <%= (uni_info.edu_point / uni_info.rate_count).toFixed(1) %> ||
+      <input type="number" name="edu_point" min="1" max="10" required>
+    </p>
+    <p>
+      <%= (uni_info.dorm_point / uni_info.rate_count).toFixed(1) %> ||
+      <input type="number" name="dorm_point" min="1" max="10" required>
+    </p>
+    <p>
+      <%= (uni_info.trans_point / uni_info.rate_count).toFixed(1) %> ||
+      <input type="number" name="trans_point" min="1" max="10" required>
+    </p>
+    <p>
+      <%= (uni_info.edu_point / uni_info.rate_count).toFixed(1) %> ||
+      <input type="number" name="campus_point" min="1" max="10" required>
+    </p>
+    <button type="submit">Gönder</button>
+  </form>
+
+  <script>
+    document.getElementById("commentForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Formun otomatik olarak gönderilmesini engeller
+      var form = event.target;
+      var uniId = "?id=<%= uni_info._id %>";
+      var actionUrl = "/api/university/new_comment/" + uniId;
+      form.setAttribute("action", actionUrl);
+      form.submit();
+    });
+
+    document.getElementById("ratingForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Formun otomatik olarak gönderilmesini engeller
+      var form = event.target;
+      var uniId = "?id=<%= uni_info._id %>";
+      var actionUrl = "/api/university/rate/" + uniId;
+      form.setAttribute("action", actionUrl);
+      form.submit();
+    });
+
+
+
+  </script>
+
+</body>
+</html>

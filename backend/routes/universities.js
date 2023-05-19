@@ -8,15 +8,22 @@ const { unix } = require('moment');
 
 
 
+
 router.route('/').get(async (req,res)=>{
     try {
-        const result = await University.findById(req.query.id)
-        res.send(result);
+        const uni = await University.findById(req.query.id)
+        const uni_comment = await Comment.find({ uni_id: req.query.id })
+        res.render("university_page",{
+            uni_info:uni,
+            comment_info: uni_comment
+          })
     } catch (e) {
         const error = e;
         res.send({success: false, error: error }).status(400)   
     }
 })
+
+
 
 router.route('/rate').post(async (req,res)=>{
     try {
@@ -27,29 +34,33 @@ router.route('/rate').post(async (req,res)=>{
         const uni = await University.findById({ _id: req.query.id })
 
 
-
-        user.ratingUnis.forEach((uniId) => {
-            if (uniId == uni._id.toString()){
-                res.send({ success: false, message: 'Already voted this university.' });
+        for (const uniId of user.ratingUnis) {
+            if (uniId == uni._id.toString()) {
+                const uniId = req.query.id;
+                const redirectUrl = `/api/university/?id=${uniId}`;
+                return res.send('<script>alert("You have already voted."); window.location.href="' + redirectUrl + '";</script>');
             }
-        })
+        }
         
         const result = await University.findOneAndUpdate({_id : req.query.id},{
             $inc : {
-                edu_point : req.body.edu_point,
-                dorm_point : req.body.dorm_point,
-                trans_point : req.body.trans_point,
-                campus_point : req.body.campus_point,
+                edu_point : parseInt(req.body.edu_point),
+                dorm_point :  parseInt(req.body.dorm_point),
+                trans_point :  parseInt(req.body.trans_point),
+                campus_point :  parseInt(req.body.campus_point),
                 rate_count : 1
             }
         }, { new: true })
-        res.send(result);
-        
+   
         user.ratingUnis.push(uni._id.toString())
         await user.save();
+        const uniId = req.query.id;
+        const redirectUrl = `/api/university/?id=${uniId}`;
+        res.redirect(redirectUrl);
         
     } catch (e) {
         const error = e;
+        console.log(e)
         res.send({success: false, error: error }).status(400)   
     }
 })
@@ -61,7 +72,11 @@ router.route('/new_comment').post(async (req,res)=>{
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);
         
-        const { username, content,} = req.body;
+
+        const { username, content} = req.body;
+        
+       
+
 
         const user = await User.findOne( {_id: token.id});
         user_id = user._id
@@ -78,10 +93,12 @@ router.route('/new_comment').post(async (req,res)=>{
 
     
         const savedComment = await comment.save();
-        res.send(savedComment);
+        const uniId = req.query.id;
+        const redirectUrl = `/api/university/?id=${uniId}`;
+        res.redirect(redirectUrl);
     } catch (e) {
         const error = e;
-        console.log(e)
+        //console.log(e)
         res.send({success: false, error: error }).status(400)   
     }
 
@@ -99,9 +116,9 @@ router.route('/show_comments').get(async (req,res)=>{
 
 })
 
-router.route('/like_comment').post(async (req,res)=>{
+router.route('/like_comment').get(async (req,res)=>{
     try {
-    
+        
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);
         
@@ -110,8 +127,10 @@ router.route('/like_comment').post(async (req,res)=>{
                 like_count : 1
             }
         }, { new: true })
-
-        res.send(result);
+        const uniId = result.uni_id;
+        const redirectUrl = `/api/university/?id=${uniId}`;
+        res.redirect(redirectUrl);
+        
     } catch (e) {
         console.log(e)
         const error = e;
@@ -119,7 +138,7 @@ router.route('/like_comment').post(async (req,res)=>{
     }
 })
 
-router.route('/dislike_comment').post(async (req,res)=>{
+router.route('/dislike_comment').get(async (req,res)=>{
     try {
     
         const accessToken = req.cookies["access-token"];
@@ -131,7 +150,10 @@ router.route('/dislike_comment').post(async (req,res)=>{
             }
         }, { new: true })
 
-        res.send(result);
+        const uniId = result.uni_id;
+        const redirectUrl = `/api/university/?id=${uniId}`;
+        res.redirect(redirectUrl);
+        
     } catch (e) {
         console.log(e)
         const error = e;

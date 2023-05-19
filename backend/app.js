@@ -6,6 +6,7 @@ require('dotenv').config();
 const {isValidated} = require("./controllers/jwt");
 let User = require('./models/user.model');
 const {sign, verify} = require('jsonwebtoken');
+const bodyParser = require('body-parser');
 
 
 
@@ -17,6 +18,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
+app.set('view engine', 'ejs'); 
+
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri , {useNewUrlParser: true, useUnifiedTopology: true});
 const connection = mongoose.connection;
@@ -24,8 +31,11 @@ connection.once('open', () => { console.log('Database connection established suc
 
 const userRouter = require('./routes/users');
 const universityRouter = require('./routes/universities')
+const homeRouter = require('./routes/home')
+
 app.use('/api/', userRouter);
 app.use('/api/university',universityRouter);
+app.use('/api/home',homeRouter)
 
 app.listen(port, () => { console.log(`Server is running on port : ${port}`)});
 
