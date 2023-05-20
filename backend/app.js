@@ -33,7 +33,7 @@ const userRouter = require('./routes/users');
 const universityRouter = require('./routes/universities')
 const homeRouter = require('./routes/home')
 
-app.use('/api/', userRouter);
+app.use('/user', userRouter);
 app.use('/university',universityRouter);
 app.use('/',homeRouter)
 
@@ -67,7 +67,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  * /api/logout
  * /university/rate
  * @swagger
- * /api/profile:
+ * /user/profile:
  *    get:
  *       summary: Get Profile.
  *       tags : ['Account']
@@ -76,7 +76,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  *          200:
  *            description: Success
  * @swagger
- *      /api:
+ *      /user:
  *          get:
  *              summary: Get User object.
  *              tags : ['Account']
@@ -88,7 +88,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 /**
  * @swagger
- *      /api/logout:
+ *      /user/logout:
  *          get:
  *              summary: Logout user.
  *              tags : ['Account']
@@ -99,7 +99,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
- * /api/register:
+ * /user/register:
  *   post:
  *     tags : ['Account']
  *     summary: Creates a new user.
@@ -124,7 +124,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
- * /api/show_comments:
+ * /user/show_comments:
  *      
  *   get:
  *     tags : ['Account']
@@ -281,7 +281,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  * @swagger
  * /university/delete_comment:
  *      
- *   post:
+ *   get:
  *     tags : ['University']
  *     summary: Delete university comment.
  *     consumes:
@@ -319,7 +319,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
- * /api/changePassword:
+ * /user/changePassword:
  *   post:
  *     tags : ['SetInfo']
  *     summary: Change Password.
@@ -344,7 +344,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
- * /api/login:
+ * /user/login:
  *   post:
  *     tags : ['Account']
  *     summary: User Login.
@@ -369,7 +369,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
- * /api/changeEmail:
+ * /user/changeEmail:
  *   post:
  *     tags : ['SetInfo']
  *     summary: Email Change.
@@ -395,7 +395,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 /**
  * @swagger
- * /api/emailVerify:
+ * /user/emailVerify:
  *   post:
  *     tags : ['Account']
  *     summary: email verification .
@@ -420,7 +420,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
- * /api/getEmailCode:
+ * /user/getEmailCode:
  *   post:
  *     tags : ['Account']
  *     summary: sents email verification code to the given email address.
@@ -443,7 +443,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 /**
  * @swagger
- * /api/resetPassword:
+ * /user/resetPassword:
  *   post:
  *     tags : ['Account']
  *     summary: reset password.

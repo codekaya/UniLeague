@@ -29,7 +29,7 @@ router.route('/profile').get(async (req, res) => {
     try {
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);
-        
+       
         const user = await User.findOne( {_id: token.id});
         res.send({user});
     } catch (e) {

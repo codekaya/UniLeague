@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="/js/login.js"></script>
+
+    
     <title>Document</title>
 </head>
 <body>
@@ -16,26 +20,6 @@
       
           <button type="submit" onclick="login()">Login</button>
         </div>
-      <script>
-            async function login(){
-                const response = await fetch("http://localhost:5000/api/login", {
-                    method: 'POST',
-                    headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json',
-                      'Cookie' : 'access-token='
-                    },
-                    body: `{
-                        "email":"${document.getElementsByName('email')[0].value}",
-                        "password":"${document.getElementsByName('psw')[0].value}"                    }`,
-                    });
-                    
-                response.json().then(data => {
-                    if(data.success){
-                        window.location.href = '/'
-                    }
-                });
-            }
-    </script>  
+
 </body>
 </html>

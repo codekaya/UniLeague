@@ -5,48 +5,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+
+  <link rel="stylesheet" href="/css/home.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
+ 
 
-<style>
-  body{
-    background-color: #009ed2;
-    font-family: system-ui;
-  }
-  ul li a {
-    color:black;
-    text-decoration: none;
-  }
-  ul {
-    margin-left: -40px;
-  }
-  ul li {
-    list-style: none;
-    margin-bottom: 10px;
-    border-bottom: 1px dotted #a7a5a5;
-    padding-bottom: 10px;
-  }
-  .main-div{
-    background-color: white;
-    padding: 20px;
-    width: 300px;
-    height: 350px;
-    position: absolute;
-    transform: translate(-50%,-50%);
-    left: 50%;
-    top: 50%;
-    border-radius: 10px;
-    box-shadow:  5px 5px 5px 5px #3c3a3a30;
-  }
-
-  #search-bar{
-    padding: 10px;
-    width: 90%;
-  }
-</style>
 <body>
 
   <div class="main-div">
-  <input type="text" id="search-bar" placeholder="search for uni..">
+    <div class="user-actions">
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+      <a href="user/logout">Logout</a>
+      
+    </div>
+
+  <div class="main-div">
   <ul id="list">
 
     <% all_uni_info.forEach(element => { %>
@@ -56,20 +32,6 @@
   </ul>
 
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-  $('#search-bar').keyup(function(){
-       var value = $(this).val().toLowerCase();
-       $('#list li').each(function(){
-            var search = $(this).text().toLowerCase();
-            if(search.indexOf(value) > -1){
-                 $(this).show();
-            }
-            else{
-                 $(this).hide();
-            }
-       });
-  });
-</script> 
+
 </body>
 </html>
