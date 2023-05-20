@@ -131,7 +131,7 @@ router.route('/changeEmail').post(async (req, res) => {
 });
 router.route('/emailVerify').post(async (req, res) => {
     try {
-        console.log(req.body.email,req.body.accessCode)
+        //console.log(req.body.email,req.body.accessCode)
         const email = req.body.email;
         const accessNumber = req.body.accessCode;
 

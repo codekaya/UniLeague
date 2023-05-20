@@ -13,7 +13,11 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+var corsOptions = {
+    origin: 'http://localhost:5000',
+    credentials:  true
+  }
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));

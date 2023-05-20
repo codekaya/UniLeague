@@ -120,26 +120,18 @@ router.route('/show_comments').get(async (req,res)=>{
 
 })
 
-
 //Kullanıcı her commente sadece bir like veya bir dislike atabilmeli
 router.route('/like_comment').get(async (req,res)=>{
 
-    try {
-         
+    try {     
         const accessToken = req.cookies["access-token"];
-        console.log(accessToken)
         const token = verify(accessToken , process.env.JWT_SECRET);
-      
-
-        const result = await Comment.findOneAndUpdate({_id : req.query.id},{
+        await Comment.findOneAndUpdate({_id : req.query.id},{
             $inc : {
                 like_count : 1
             }
         }, { new: true })
-        const uniId = result.uni_id;
-        const redirectUrl = `/university/?id=${uniId}`;
-        res.redirect(redirectUrl);
-        
+        res.send({success:true})
     } catch (e) {
         //console.log(e)
         const error = e;
@@ -154,16 +146,12 @@ router.route('/dislike_comment').get(async (req,res)=>{
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);
         
-        const result = await Comment.findOneAndUpdate({_id : req.query.id},{
+        await Comment.findOneAndUpdate({_id : req.query.id},{
             $inc : {
                 dislike_count : 1
             }
         }, { new: true })
-
-        const uniId = result.uni_id;
-        const redirectUrl = `/university/?id=${uniId}`;
-        res.redirect(redirectUrl);
-        
+        res.send({success:true})
     } catch (e) {
         //console.log(e)
         const error = e;
@@ -177,22 +165,14 @@ router.route('/delete_comment').get(async (req,res)=>{
         const token = verify(accessToken , process.env.JWT_SECRET);
         const user = await User.findOne( {_id: token.id});
         const comment = await Comment.findById({_id : req.query.id}); 
-
-    
-
         
         if (user.id === comment.user_id) {
 
-            result = await Comment.findByIdAndDelete(req.query.id);
-            const uniId = result.uni_id;
-            const redirectUrl = `/university/?id=${uniId}`;
-            res.redirect(redirectUrl);
+            await Comment.findByIdAndDelete(req.query.id);
+            res.send({success:true})
             
           } else {
-            result = await Comment.findById(req.query.id);
-            const uniId = result.uni_id;
-            const redirectUrl = `/university/?id=${uniId}`;
-            return res.send('<script>alert("Not Your Comment"); window.location.href="' + redirectUrl + '";</script>');
+            res.send({success:false,error:{name:'NotAuthorized'}}) // Yorum kullanıcıya ait değil
           }
 
 

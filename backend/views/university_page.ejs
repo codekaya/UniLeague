@@ -15,7 +15,7 @@
     <h2><%= uni_info.Province %></h2>
 
     <% comment_info.forEach(comment => { %>
-      <p><%= comment.content %> || <%= comment.like_count %> || <%= comment.dislike_count %>
+      <p id="<%= comment.id %>"><%= comment.content %> || <label id="like<%= comment.id %>"> <%= comment.like_count %> </label> || <label id="dislike<%= comment.id %>"> <%= comment.dislike_count %> </label>
         <button onclick="likeComment('<%= comment.id %>')">Like</button>
         <button onclick="dislikeComment('<%= comment.id %>')">Dislike</button>
         <button onclick="deleteComment('<%= comment.id %>')">Delete</button>
