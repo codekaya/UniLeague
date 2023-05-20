@@ -74,7 +74,6 @@ router.route('/new_comment').post(async (req,res)=>{
     
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);    
-
         const { username, content} = req.body;
 
         const user = await User.findOne( {_id: token.id});
@@ -89,16 +88,11 @@ router.route('/new_comment').post(async (req,res)=>{
           uni_id,
           user_id
         });
-
-    
-        const savedComment = await comment.save();
-        const uniId = req.query.id;
-        const redirectUrl = `/university/?id=${uniId}`;
-        res.redirect(redirectUrl);
+        await comment.save();
+        res.send({success:true});
     } catch (e) {
         if(e.name === 'JsonWebTokenError'){
-            redirectUrl = `/university/?id=${req.query.id}`;
-            return res.send('<script>alert("You need to login to post comment"); window.location.href="' + redirectUrl + '";</script>');
+            return res.send({success:true,error:{name:'NotAuthorized'}});
         }
         const error = e;
         //console.log(e)

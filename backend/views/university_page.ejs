@@ -27,15 +27,13 @@
 
     <h2>Kullanıcı Adı ve Metin Formu</h2>
 
-  <form id="commentForm" method="POST">
     <label for="username">Kullanıcı Adı:</label>
     <input type="text" id="username" name="username" required><br><br>
 
     <label for="content">Metin:</label><br>
     <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>
 
-    <input type="submit" value="Gönder">
-  </form>
+    <button onclick="addComment('<%= uni_info._id %>')">Gönder</button>
   
   <h2>Ratings</h2>
   <form id="ratingForm" method="post">
@@ -60,14 +58,7 @@
 
 
   <script>
-    document.getElementById("commentForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // Formun otomatik olarak gönderilmesini engeller
-      var form = event.target;
-      var uniId = "?id=<%= uni_info._id %>";
-      var actionUrl = "/university/new_comment/" + uniId;
-      form.setAttribute("action", actionUrl);
-      form.submit();
-    });
+    
 
     document.getElementById("ratingForm").addEventListener("submit", function(event) {
       event.preventDefault(); // Formun otomatik olarak gönderilmesini engeller

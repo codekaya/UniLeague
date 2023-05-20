@@ -45,4 +45,28 @@ async function deleteComment(commentId) {
     });
 }
 
+async function addComment(uni_id){
+  const response = await fetch(`http://localhost:5000/university/new_comment?id=${uni_id}`, {
+    credentials:'include',
+    headers:{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: `{
+      "username":"${document.getElementById('username').value}",
+      "content":"${document.getElementById('content').value}"}`,
+    });
+    response.json().then(data => {
+      if(data.success){
+        location.reload();
+      }
+      else{
+        alert(data.error.name)
+      }
+    });
+}
 
+if(performance.navigation.type == 2){
+  location.reload(true);
+}

@@ -7,8 +7,8 @@ async function login(){
           'Cookie' : 'access-token='
         },
         body: `{
-            "email":"${document.getElementsByName('email')[0].value}",
-            "password":"${document.getElementsByName('psw')[0].value}"}`,
+            "username":"${document.getElementsByName('email')[0].value}",
+            "content":"${document.getElementsByName('psw')[0].value}"}`,
         });
         
     response.json().then(data => {
