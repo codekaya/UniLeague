@@ -31,7 +31,9 @@ router.route('/profile').get(async (req, res) => {
         const token = verify(accessToken , process.env.JWT_SECRET);
        
         const user = await User.findOne( {_id: token.id});
-        res.send({user});
+        res.render("profile",{
+           user_info:user
+          })
     } catch (e) {
         const error = e;
         res.send({success: false, error: error })  
@@ -60,8 +62,6 @@ router.route('/register').post( async (req,res) =>{
   
 
     const result  = await register(req.body.email, req.body.password,req.body.name,req.body.last_name,req.body.isUniStudent,req.body.uni_id);
-    
-    
     res.send({success: true, response: result.error});
 });
 

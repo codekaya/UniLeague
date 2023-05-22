@@ -37,9 +37,15 @@ const userRouter = require('./routes/users');
 const universityRouter = require('./routes/universities')
 const homeRouter = require('./routes/home')
 
+
+  
+
+
 app.use('/user', userRouter);
 app.use('/university',universityRouter);
 app.use('/',homeRouter)
+
+
 
 app.listen(port, () => { console.log(`Server is running on port : ${port}`)});
 
