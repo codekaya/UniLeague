@@ -36,7 +36,7 @@
     <label for="tarih">University</label>
 
     <select id="uni" name="uni_name" required>
-      
+            <option value="0">Uni Muni Yok</option>
         <% uni_id_title.forEach(element => { %>
             <option value="<%= element._id  %>"><%= element.title%></option>
             <% }) %>

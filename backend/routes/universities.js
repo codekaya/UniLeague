@@ -33,28 +33,38 @@ router.route('/rate').post(async (req,res)=>{
         const user = await User.findOne( {_id: token.id});
         const uni = await University.findById({ _id: req.query.id })
 
-
-        for (const uniId of user.ratingUnis) {
-            if (uniId == uni._id.toString()) {
+        
+        if (!user.isUniStudent){
+            return res.send({success:false,error:{name:'You can not vote.'}})
+        }
+        if (user.isRated && (user.uni_id == uni._id) ) {
                 return res.send({success:false,error:{name:'Already Voted'}})
             }
-        }
-
+    
         if (!(user.uni_id == uni._id)){
-            return res.send({success:false,error:{name:'Not member of this university'}})
+                return res.send({success:false,error:{name:'Not member of this university'}})
         }
         
+        edu_point_fe = parseInt(req.body.edu_point)
+        dorm_point_fe = parseInt(req.body.dorm_point)
+        trans_point_fe = parseInt(req.body.trans_point)
+        campus_point_fe = parseInt(req.body.campus_point)
+
         const result = await University.findOneAndUpdate({_id : req.query.id},{
             $inc : {
-                edu_point : parseInt(req.body.edu_point),
-                dorm_point :  parseInt(req.body.dorm_point),
-                trans_point :  parseInt(req.body.trans_point),
-                campus_point :  parseInt(req.body.campus_point),
+                edu_point : edu_point_fe,
+                dorm_point :  dorm_point_fe,
+                trans_point :  trans_point_fe,
+                campus_point : campus_point_fe,
                 rate_count : 1
             }
         }, { new: true })
-   
-        user.ratingUnis.push(uni._id.toString())
+        const newRatingPoints = [edu_point_fe,dorm_point_fe,trans_point_fe,campus_point_fe]
+        await User.updateOne(
+            { _id: user._id },
+            { $push: { ratingPoints: { $each: newRatingPoints } },
+              $set: { isRated: true } }
+          );
         await user.save();
         res.send({success:true})
         
@@ -71,6 +81,7 @@ router.route('/rate').post(async (req,res)=>{
 router.route('/new_comment').post(async (req,res)=>{
     
     try {
+      
     
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);    
@@ -79,9 +90,10 @@ router.route('/new_comment').post(async (req,res)=>{
         const user = await User.findOne( {_id: token.id});
         user_id = user._id
 
+
         const uni = await University.findById(req.query.id)
         uni_id = uni._id
-
+        
         const comment = new Comment({
           username,
           content,

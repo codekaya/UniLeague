@@ -38,23 +38,22 @@
   <h2>Ratings</h2>
   <form id="ratingForm" method="post">
     <p>
-      <%= (uni_info.edu_point / uni_info.rate_count).toFixed(1) %> ||
-      <input type="number" id="edu_point" min="1" max="10" required>
+        <%= (isNaN(uni_info.edu_point / uni_info.rate_count) ? 0 : (uni_info.edu_point / uni_info.rate_count).toFixed(1)) %> ||
+        <input type="number" id="edu_point" min="1" max="10" required>
     </p>
     <p>
-      <%= (uni_info.dorm_point / uni_info.rate_count).toFixed(1) %> ||
-      <input type="number" id="dorm_point" min="1" max="10" required>
+        <%= (isNaN(uni_info.dorm_point / uni_info.rate_count) ? 0 : (uni_info.dorm_point / uni_info.rate_count).toFixed(1)) %> ||
+        <input type="number" id="dorm_point" min="1" max="10" required>
     </p>
     <p>
-      <%= (uni_info.trans_point / uni_info.rate_count).toFixed(1) %> ||
-      <input type="number" id="trans_point" min="1" max="10" required>
+        <%= (isNaN(uni_info.trans_point / uni_info.rate_count) ? 0 : (uni_info.trans_point / uni_info.rate_count).toFixed(1)) %> ||
+        <input type="number" id="trans_point" min="1" max="10" required>
     </p>
     <p>
-      <%= (uni_info.edu_point / uni_info.rate_count).toFixed(1) %> ||
-      <input type="number" id="campus_point" min="1" max="10" required>
+        <%= (isNaN(uni_info.edu_point / uni_info.rate_count) ? 0 : (uni_info.edu_point / uni_info.rate_count).toFixed(1)) %> ||
+        <input type="number" id="campus_point" min="1" max="10" required>
     </p>
-    
-  </form>
+</form>
   <button onclick="giveRating('<%= uni_info._id %>')">Gönder</button>
   
 </body>

@@ -5,14 +5,16 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
 
     name:{
+      required:true,
       type: String,
     },
     last_name: {
+      required:true,
       type: String,
       },
     isUniStudent: {
       type: Boolean,
-      reuired: true,
+      required: true,
       default: false
         },
     uni_id: {
@@ -34,14 +36,20 @@ const userSchema = new Schema({
     },
     isValidated: {
         type: Boolean,
-        reuired: true,
+        required: true,
         default: false
     },
-    ratingUnis:{
+    ratingPoints:{
        type: Array,
        required: true,
        default: []
-    }
+    },
+    isRated: {
+      type: Boolean,
+      required: true,
+      default: false
+  },
+
 }
 ); 
 
