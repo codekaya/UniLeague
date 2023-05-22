@@ -39,39 +39,23 @@
   <form id="ratingForm" method="post">
     <p>
       <%= (uni_info.edu_point / uni_info.rate_count).toFixed(1) %> ||
-      <input type="number" name="edu_point" min="1" max="10" required>
+      <input type="number" id="edu_point" min="1" max="10" required>
     </p>
     <p>
       <%= (uni_info.dorm_point / uni_info.rate_count).toFixed(1) %> ||
-      <input type="number" name="dorm_point" min="1" max="10" required>
+      <input type="number" id="dorm_point" min="1" max="10" required>
     </p>
     <p>
       <%= (uni_info.trans_point / uni_info.rate_count).toFixed(1) %> ||
-      <input type="number" name="trans_point" min="1" max="10" required>
+      <input type="number" id="trans_point" min="1" max="10" required>
     </p>
     <p>
       <%= (uni_info.edu_point / uni_info.rate_count).toFixed(1) %> ||
-      <input type="number" name="campus_point" min="1" max="10" required>
+      <input type="number" id="campus_point" min="1" max="10" required>
     </p>
-    <button type="submit">Gönder</button>
-  </form>
-
-
-  <script>
     
-
-    document.getElementById("ratingForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // Formun otomatik olarak gönderilmesini engeller
-      var form = event.target;
-      var uniId = "?id=<%= uni_info._id %>";
-      var actionUrl = "/university/rate/" + uniId;
-      form.setAttribute("action", actionUrl);
-      form.submit();
-    });
-
-
-
-  </script>
-
+  </form>
+  <button onclick="giveRating('<%= uni_info._id %>')">Gönder</button>
+  
 </body>
 </html>

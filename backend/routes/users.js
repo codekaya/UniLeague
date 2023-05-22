@@ -57,8 +57,12 @@ router.route('/show_comments').get(async (req,res)=>{
 
 
 router.route('/register').post( async (req,res) =>{
-    const result  = await register(req.body.email, req.body.password);
-    res.send(result);
+  
+
+    const result  = await register(req.body.email, req.body.password,req.body.name,req.body.last_name,req.body.isUniStudent,req.body.uni_id);
+    
+    
+    res.send({success: true, response: result.error});
 });
 
 router.route('/login').post( async (req, res) => {

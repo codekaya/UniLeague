@@ -3,6 +3,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+
+    name:{
+      type: String,
+    },
+    last_name: {
+      type: String,
+      },
+    isUniStudent: {
+      type: Boolean,
+      reuired: true,
+      default: false
+        },
+    uni_id: {
+      type: String,
+      unique:true
+        },  
     email: {
       type: String,
       required: true,

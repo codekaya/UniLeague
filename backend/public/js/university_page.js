@@ -70,3 +70,34 @@ async function addComment(uni_id){
 if(performance.navigation.type == 2){
   location.reload(true);
 }
+
+
+async function giveRating(uni_id){
+  const response = await fetch(`http://localhost:5000/university/rate?id=${uni_id}`, {
+    credentials:'include',
+    headers:{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: `{
+      "edu_point":"${document.getElementById('edu_point').value}",
+      "dorm_point":"${document.getElementById('dorm_point').value}",
+      "trans_point":"${document.getElementById('trans_point').value}",
+      "campus_point":"${document.getElementById('campus_point').value}"}`,
+      
+    });
+    response.json().then(data => {
+      console.log(data)
+      if(data.success){
+        location.reload();
+      }
+      else{
+        alert(data.error.name)
+      }
+    });
+}
+
+if(performance.navigation.type == 2){
+  location.reload(true);
+}

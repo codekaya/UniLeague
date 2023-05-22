@@ -36,10 +36,12 @@ router.route('/rate').post(async (req,res)=>{
 
         for (const uniId of user.ratingUnis) {
             if (uniId == uni._id.toString()) {
-                const uniId = req.query.id;
-                const redirectUrl = `/university/?id=${uniId}`;
-                return res.send('<script>alert("You have already voted."); window.location.href="' + redirectUrl + '";</script>');
+                return res.send({success:false,error:{name:'Already Voted'}})
             }
+        }
+
+        if (!(user.uni_id == uni._id)){
+            return res.send({success:false,error:{name:'Not member of this university'}})
         }
         
         const result = await University.findOneAndUpdate({_id : req.query.id},{
@@ -54,9 +56,7 @@ router.route('/rate').post(async (req,res)=>{
    
         user.ratingUnis.push(uni._id.toString())
         await user.save();
-        const uniId = req.query.id;
-        const redirectUrl = `/university/?id=${uniId}`;
-        res.redirect(redirectUrl);
+        res.send({success:true})
         
     } catch (e) {
         if(e.name === 'JsonWebTokenError'){

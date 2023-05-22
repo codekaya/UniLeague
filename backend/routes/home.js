@@ -23,4 +23,11 @@ router.route('/login').get(async (req,res)=>{
     res.render('login')
 })
 
+router.route('/register').get(async (req,res)=>{
+    const uni_id_title = await University.find({}, { _id: 1, title: 1 });
+    res.render("register",{
+        uni_id_title:uni_id_title
+      })
+})
+
 module.exports = router;
