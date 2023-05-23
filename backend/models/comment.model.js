@@ -24,13 +24,13 @@ const commentSchema = new Schema({
         type: String,
         required: true
       },
-      like_count: {
-        type: Number,
-        default: 0
+      likes: {
+        type: Array,
+        default: []
       },
-      dislike_count: {
-        type: Number,
-        default: 0
+      dislikes: {
+        type: Array,
+        default: []
       }
     });
 

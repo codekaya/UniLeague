@@ -6,7 +6,9 @@ async function likeComment(commentId) {
     response.json().then(data => {
       if(data.success){
         let element = document.getElementById('like'+commentId)
-        element.innerText = parseInt(element.innerText) + 1
+        let element2 = document.getElementById('dislike'+commentId)
+        element.innerText = data.likeCount
+        element2.innerText = data.dislikeCount
       }
       else{
         alert(data.error.name)
@@ -21,8 +23,10 @@ async function dislikeComment(commentId) {
     });
     response.json().then(data => {
       if(data.success){
-        let element = document.getElementById('dislike'+commentId)
-        element.innerText = parseInt(element.innerText) + 1
+        let element = document.getElementById('like'+commentId)
+        let element2 = document.getElementById('dislike'+commentId)
+        element.innerText = data.likeCount
+        element2.innerText = data.dislikeCount
       }
       else{
         alert(data.error.name)

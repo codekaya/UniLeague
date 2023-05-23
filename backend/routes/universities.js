@@ -132,12 +132,14 @@ router.route('/like_comment').get(async (req,res)=>{
     try {     
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);
-        await Comment.findOneAndUpdate({_id : req.query.id},{
-            $inc : {
-                like_count : 1
-            }
-        }, { new: true })
-        res.send({success:true})
+        const comment = await Comment.findById(req.query.id)
+        if(comment.likes.includes(token.id)){
+            throw {name:"You have already liked this comment"}
+        }
+        comment.likes.push(token.id)
+        comment.dislikes = comment.dislikes.filter(e=>e !== token.id) // Dislike listesinden çıkarıyor
+        await comment.save();
+        res.send({success:true, likeCount:comment.likes.length, dislikeCount:comment.dislikes.length})
     } catch (e) {
         //console.log(e)
         const error = e;
@@ -148,16 +150,17 @@ router.route('/like_comment').get(async (req,res)=>{
 //Kullanıcı her commente sadece bir like veya bir dislike atabilmeli
 router.route('/dislike_comment').get(async (req,res)=>{
     try {
-    
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);
         
-        await Comment.findOneAndUpdate({_id : req.query.id},{
-            $inc : {
-                dislike_count : 1
-            }
-        }, { new: true })
-        res.send({success:true})
+        const comment = await Comment.findById(req.query.id)
+        if(comment.dislikes.includes(token.id)){
+            throw {name:"You have already disliked this comment"}
+        }
+        comment.dislikes.push(token.id)
+        comment.likes = comment.likes.filter(e=>e !== token.id) // like listesinden çıkarıyor
+        await comment.save()
+        res.send({success:true, likeCount:comment.likes.length, dislikeCount:comment.dislikes.length})
     } catch (e) {
         //console.log(e)
         const error = e;
@@ -171,17 +174,13 @@ router.route('/delete_comment').get(async (req,res)=>{
         const token = verify(accessToken , process.env.JWT_SECRET);
         const user = await User.findOne( {_id: token.id});
         const comment = await Comment.findById({_id : req.query.id}); 
-        
         if (user.id === comment.user_id) {
-
             await Comment.findByIdAndDelete(req.query.id);
             res.send({success:true})
             
           } else {
             res.send({success:false,error:{name:'NotAuthorized'}}) // Yorum kullanıcıya ait değil
           }
-
-
     } catch (e) {
         console.log(e)
         const error = e;
