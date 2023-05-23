@@ -13,7 +13,7 @@
   border-radius: 5px;
   padding: 2%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  width: 80%; /* adjust as needed */
+  min-width: 40%; /* adjust as needed */
   max-width: 300px; /* add a max-width to prevent it from becoming too wide */
   margin: 0 auto; /* center horizontally */
   max-height: 60%;

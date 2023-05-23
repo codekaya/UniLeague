@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: flex-start;
   height: 100vh;
-  background-image: url(https://www.mgc.com.tr/wp-content/uploads/2022/06/eylemli-orman-nedir-tr-mgc-legal.jpg);
+  background-image: url(https://media-cdn.t24.com.tr/media/library/2017/06/koc-universitesi_278165411.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
@@ -12,10 +12,9 @@
 }
 
 .mainPage-topbar {
-  background-color: rgba(128, 128, 128, 0.8);
+  background-color: rgb(255, 255, 255);
   height: 12%;
   width: 100%;
-  margin-top: 0.5%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -24,17 +23,19 @@
 .topbar-button {
   padding: 1% 2%;
   font-size: 1rem;
-  background-color: #0077cc;
-  color: #fff;
+  background-color: #ffffff;
+  color: #000000;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   margin-left: 2rem;
   text-decoration: none;
+  border-radius: 10px;
 }
 
 .topbar-button:hover {
-  background-color: #005fa3;
+  background-color: #ff1212;
+  color: white;
 }
 
 .mainPage-logo {
@@ -55,7 +56,9 @@
   width: 40%;
   position: absolute;
   bottom: 20px;
-  background: #5151516b;
+  background: #ffffff;
+  
+  
 }
 
 .search input {
@@ -64,22 +67,26 @@
   border: none;
   border-radius: 4px;
   outline: none;
-  color: whitesmoke;
-  background: #5151516b;
+  color: rgb(255, 255, 255);
+  background: #ffffff;
+ 
+  
 }
 
 .search-button {
   height: 30px;
   width: 30px;
   padding: 8px;
-  background-color: #ccc;
+  background-color: #ffffff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   background-image: url(https://png.pngitem.com/pimgs/s/25-254355_search-icon-circle-hd-png-download.png);
   background-size: cover;
-  background-color: #2828286b;
+  background-color: #ffffff;
   background-blend-mode: darken;
+  transform:scaleX(-1);
+ 
 }
 
 .dropdownn {
@@ -95,12 +102,15 @@
 
 .dropdown-button {
   padding: 8px 12px;
-  background-color: #0077cc;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #111111;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-right: 80%;
+  margin-right: 60%;
+  border-style: solid;
+  border-color: red;
+  border-width: 2px;
 }
 
 .dropdown-content {
@@ -111,7 +121,7 @@
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  border: 2px solid black;
+  border: 2px solid rgb(102, 102, 102);
   max-width: 120px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -119,7 +129,7 @@
 }
 
 .dropdown-content a {
-  color: black;
+  color: rgb(95, 95, 95);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -130,22 +140,30 @@
 }
 
 .dropdown-content a.login-btn {
-  color: blue;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  border-radius: 18px 18px 0px 0px;
   font-weight: bold;
+  transition: 0.2s ease-in;
 }
 
 .dropdown-content a.login-btn:hover {
-  background-color: #ababab84;
+  background-color: #ff0000;
+  color:rgb(255, 255, 255);
   border-radius: 18px 18px 0px 0px;
 }
 
 .dropdown-content a.exit-btn {
-  color: red;
+  color: rgb(0, 0, 0);
+  background-color: white;
   font-weight: bold;
+  transition: 0.2s ease-in;
+  border-radius: 0px 0px 18px 18px;
 }
 
 .dropdown-content a.exit-btn:hover {
-  background-color: #ababab84;
+  background-color: #ff0000;
+  color: white;
   border-radius: 0px 0px 18px 18px;
 }
 
