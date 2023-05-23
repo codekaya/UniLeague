@@ -4,22 +4,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script src="/js/login.js"></script>
-
-    
-    <title>Document</title>
-</head>
+    <title>Login | Unileague</title>
+    <link rel="stylesheet" href="/css/login.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 <body>
-        <div class="container">
-          <label for="uname"><b>Email</b></label>
-          <input type="text" placeholder="Enter Username" name="email" required>
-      
-          <label for="psw"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" name="psw" required>
-      
-          <button type="submit" onclick="login()">Login</button>
-        </div>
+    <div class="login-container">
+        <video class="video-background" autoPlay loop muted >
+          <source src="images/myvideo.mp4" type="video/mp4">
+       </video>
+       
+       <form id="form" class="login-form">
+         <h1 class="login-header">Login</h1>
+         <input name="email"
+           type="email"
+           placeholder="Email"
+           class="login-input"
+           required
+         />
+         <input name="psw"
+           type="password"
+           placeholder="Password"
+           class="login-input"
+           required
+         />
+         <button type="submit" class="login-button">
+           Login
+         </button>
+         <br>
+         <label id="errorMessage">Incorrect Email or Password</label>
+         <div class="login-footer">
+           Don't have an account? <a href="./register">Sign up</a>
+         </div>
+       </form>
+     </div>
+     <script src="/js/login.js"></script>
 </body>
-
 </html>
