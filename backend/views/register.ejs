@@ -7,75 +7,108 @@
     <title>Register | Unileague</title>
     <link rel="stylesheet" href="/css/register.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="register-container">
-        <video class="video-background" autoPlay loop muted>
-          <source src="images/RegisterVid.mp4" type="video/mp4" />
-        </video>
-        <form class="register-form" id="registerForm">
-          <h1 class="register-header">Register</h1>
-          <div class="register-error"></div>
-          <input
-            name="Name"
-            type="text"
-            minlength=3
-            maxlength=100
-            placeholder="Name"
-            class="register-input"
-            required
-          />
-          <input
-            name="Surname"
-            type="text"
-            minlength=3
-            maxlength=100
-            placeholder="Surname"
-            class="register-input"
-            required
-          />
-          <input
-            name="Email"
-            type="email"
-            placeholder="Email"
-            class="register-input"
-            required
-          />
-          <input
-            name="Password"
-            type="password"
-            placeholder="Password"
-            class="register-input"
-            required
-          />
-          <input
-            name="ConfirmPassword"
-            type="password"
-            placeholder="Confirm Password"
-            class="register-input"
-            required
-          />
-          <div class="register-input">
-            <span>Are you a University student?</span>
-            <label><input type="radio" name="student" value="yes" required>Yes</label>
-            <label><input type="radio" name="student" value="no">No</label>
-          </div>
-          <select id="uni" name="uni_name" class="register-input" required>
-            <option value="0">Select your University</option>
-        <% uni_id_title.forEach(element => { %>
-            <option value="<%= element._id  %>"><%= element.title%></option>
-            <% }) %>
-    </select><br><br>
-          <button type="submit" class="register-button">
-            Register
-          </button>
-          <div class="register-footer">
-            Already have an account?  <a href="./login">Sign in</a>
-          </div>
-        </form>
-      </div>
-      <script src="/js/register.js"></script>
+    
 </body>
+
+
+
+
+<body class="bg-white">
+  <nav class="navbar navbar-dark navbar-expand-md fixed-top navbar-shrink py-3 bg-dark" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+                  </svg></span><span>UNILEAGUE</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navcol-1">
+              <ul class="navbar-nav mx-auto">
+                  <li class="nav-item"><a class="nav-link active" href="#">Anasayfa</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Karşılaştır</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Genel Sıralama</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
+              </ul><a class="btn btn-primary shadow" role="button" href="/login">Giriş Yap</a>
+              &nbsp;&nbsp;
+              </ul><a class="btn btn-primary shadow" role="button" href="/register">Kayıt OL</a>
+          </div>
+      </div>
+  </nav>
+
+      
+          <div class="row mb-5"></div>
+          <div class="register-container">
+            <video class="video-background" autoPlay loop muted>
+              <source src="images/RegisterVid.mp4" type="video/mp4" />
+            </video>
+            <form class="register-form" id="registerForm">
+              <h1 class="register-header">Register</h1>
+              <div class="register-error"></div>
+              <input
+                name="Name"
+                type="text"
+                minlength=3
+                maxlength=100
+                placeholder="Name"
+                class="register-input"
+                required
+              />
+              <input
+                name="Surname"
+                type="text"
+                minlength=3
+                maxlength=100
+                placeholder="Surname"
+                class="register-input"
+                required
+              />
+              <input
+                name="Email"
+                type="email"
+                placeholder="Email"
+                class="register-input"
+                required
+              />
+              <input
+                name="Password"
+                type="password"
+                placeholder="Password"
+                class="register-input"
+                required
+              />
+              <input
+                name="ConfirmPassword"
+                type="password"
+                placeholder="Confirm Password"
+                class="register-input"
+                required
+              />
+              <div class="register-input">
+                <span>Are you a University student?</span>
+                <label><input type="radio" name="student" value="yes" required>Yes</label>
+                <label><input type="radio" name="student" value="no">No</label>
+              </div>
+              <select id="uni" name="uni_name" class="register-input" required>
+                <option value="0">Select your University</option>
+            <% uni_id_title.forEach(element => { %>
+                <option value="<%= element._id  %>"><%= element.title%></option>
+                <% }) %>
+        </select><br><br>
+              <button type="submit" class="register-button">
+                Register
+              </button>
+              <div class="register-footer">
+                Already have an account?  <a href="./login">Sign in</a>
+              </div>
+            </form>
+          </div>
+          <footer class="py-2 bg-dark text-light fixed-bottom">
+            <div class="container text-center">
+                <p>&copy; 2023 UNILEAGUE. Bütün hakları saklıdır.</p>
+            </div>
+        </footer>
+          <script src="/js/register.js"></script>
+      
 </html>

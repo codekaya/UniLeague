@@ -14,11 +14,26 @@ async function login(event){
         });
         
     response.json().then(data => {
+        const errorContainer = document.getElementById('error-container');
+        errorContainer.innerHTML = '';
+
         if(data.success){
             window.location.href = '/'
         }
         else{
-            document.getElementById('errorMessage').style.display = "block"
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'alert alert-danger';
+            errorMessage.style.backgroundColor = 'white';
+            errorMessage.style.color = 'red';
+            errorMessage.style.fontWeight = 'bold';
+            errorMessage.style.textAlign = 'center';
+            errorMessage.textContent = 'Hatalı Kullanıcı Adı veya Parola!';
+    
+            // Hata mesajını görüntülemek için bir yer seçin (örneğin, bir <div> elementi)
+            const errorContainer = document.getElementById('error-container');
+    
+            // Hata mesajını ekleyin
+            errorContainer.appendChild(errorMessage);
         }
     });
 }
