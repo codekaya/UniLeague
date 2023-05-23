@@ -122,7 +122,7 @@ const changePassword = async(userID, oldPass, newPass) => {
     else{
         const hash = await bcrypt.hash(newPass, 10);
         const log = await User.updateOne({_id: userID}, { password : hash });
-        return {valid: 1, response : "PASSWORD CHANGED SUCCESSFULLY"};
+        return {success:true,valid: 1, response : "PASSWORD CHANGED SUCCESSFULLY"};
     }
 }
 

@@ -86,6 +86,18 @@ router.route('/login').post( async (req, res) => {
     
     
 });
+
+router.route('/changePassword').get(async (req, res) => {
+    try {
+        res.render("change_pass",{
+           })
+    } catch (e) {
+        const error = e;
+        res.send({success: false, error: error })
+    }  
+});
+
+
 router.route('/changePassword').post(async (req, res) => {
     try {
         const accessToken = req.cookies["access-token"];
@@ -93,12 +105,19 @@ router.route('/changePassword').post(async (req, res) => {
         const oldPass = req.body.oldPassword;
         const newPass = req.body.newPassword;
         const result = await changePassword(token.id, oldPass, newPass);
-        res.send(result);
+        console.log(result)
+        if (result.success) {
+            res.send({ success: true});
+        } else {
+            res.send({ success: false, error: result.error });
+        }
     } catch (e) {
         const error = e;
         res.send({success: false, error: error })
     }  
 });
+
+
 
 router.route('/resetPassword').post(async (req, res) => {
     try {
