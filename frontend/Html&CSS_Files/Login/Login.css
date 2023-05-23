@@ -38,9 +38,6 @@
     font-size: 14px;
   }
  .login-container {
-    /*background-image: url("./images/bckgrnd.jpeg");*/
-    /*background-image: url("./images/Brucebg.gif");*/
-   
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,7 +57,7 @@
     width: 100%;
     height: 100%;
     object-fit: fill;
-    z-index: -2; /* set the z-index to -1 to position it behind the login form */
+    z-index: -2; 
   }
 
 
