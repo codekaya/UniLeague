@@ -10,7 +10,7 @@ let User = require('../models/user.model');
 router.route('/').get(async (req,res)=>{
     try {
         const all_uni_info = await University.find({},{ _id: 1,title: 1})
-        res.render("home",{
+        res.render("home2",{
             all_uni_info:all_uni_info
           })
     } catch (e) {

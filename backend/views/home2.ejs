@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Projects - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            overflow-y: hidden; /* Yalnızca dikey kaydırmayı etkinleştirir */
+            
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+</head>
+
+<body class="bg-white">
+    <nav class="navbar navbar-dark navbar-expand-md fixed-top navbar-shrink py-3 bg-dark" id="mainNav">
+        <div class="container">
+          <a class="navbar-brand d-flex align-items-center" href="/">
+                    </svg></span><span>UNILEAGUE</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">Anasayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Karşılaştır</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Genel Sıralama</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
+                </ul><a class="btn btn-primary shadow" role="button" href="signup.html">Giriş Yap</a>
+                &nbsp;&nbsp;
+                </ul><a class="btn btn-primary shadow" role="button" href="signup.html">Kayıt OL</a>
+            </div>
+        </div>
+    </nav>
+    <section class="py-5 mt-5">
+        <div class="container py-5">
+            <div class="row mb-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                 
+          
+                 
+                   <div class="container"><img class="img-fluid d-block mx-auto mb-5" src="images/uni.png" width="400" height="400">
+
+                   </div>
+                   <br><br><br><br>
+                    <h2 class="fw-bold" style="color:black">Üniversite sayfasına gitmek hemen aramaya başla</h2>
+                    
+                    <br>
+                    <div class="input-group">
+                      <input type="text" id="myInput" class="form-control custom-input" placeholder="Keşfet... Bir üniversite ya da öğrenci için ara">
+                    </div>
+                    <br>
+                   <ul class="list-group" id="myList">
+                              <% all_uni_info.forEach(element => { %>
+                                <li class="list-group-item bg-white">
+                                    <a href="/university/?id=<%=element._id%>"><span style="font-weight: bold;color:black"><%= element.title %></span></a>
+                                </li>
+        
+                                 <% }) %>
+                    </ul>
+
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+</body>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bold-and-dark.js"></script>
+    <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myList li").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+        </script>
+<script>
+    var myList = document.getElementById("myList");
+    var listItems = myList.getElementsByTagName("li");
+  
+    // Sadece belirli öğeyi göster
+    function showItem(index) {
+
+      for (var i = 0; i < listItems.length; i++) {
+        listItems[i].style.display = "none";
+      }
+  
+      // Belirli öğeyi göster
+      var item = document.getElementById("item" + index);
+      if (item) {
+        item.style.display = "block";
+      }
+    }
+    showItem(0);
+  </script>
+
+</html>
