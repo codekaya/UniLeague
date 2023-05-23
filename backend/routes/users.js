@@ -62,7 +62,12 @@ router.route('/register').post( async (req,res) =>{
   
 
     const result  = await register(req.body.email, req.body.password,req.body.name,req.body.last_name,req.body.isUniStudent,req.body.uni_id);
-    res.send({success: true, response: result.error});
+    if(result.success){
+        res.send({success:true})
+    }
+    else{
+        res.send(result)
+    }
 });
 
 router.route('/login').post( async (req, res) => {

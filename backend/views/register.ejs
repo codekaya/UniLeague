@@ -4,52 +4,78 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASD</title>
-
-    <script src="/js/register.js"></script>
+    <title>Register | Unileague</title>
+    <link rel="stylesheet" href="/css/register.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 </head>
-    <html>
-
 <body>
-  <h2>Kayıt Formu</h2>
-  
-  <form id="registerForm" method="post">
-    <label for="name">Ad:</label>
-    <input type="text" id="name" name="ad" required><br><br>
-    
-    <label for="last_name">Soyad:</label>
-    <input type="text" id="last_name" name="last_name" required><br><br>
-    
-    <label for="email">E-posta:</label>
-    <input type="email" id="email" name="email" required><br><br>
-    
-    <label for="sifre">Şifre:</label>
-    <input type="password" id="password" name="password" required><br><br>
-    
-    <label for="ogrenci">Üniversite Öğrencisi misiniz?</label><br>
-    <input type="radio" id="evet" name="ogrenci" value="evet" required>
-    <label for="evet">Evet</label><br>
-    <input type="radio" id="hayir" name="ogrenci" value="hayir" required>
-    <label for="hayir">Hayır</label><br><br>
-   
-
-    <label for="tarih">University</label>
-
-    <select id="uni" name="uni_name" required>
-            <option value="0">Uni Muni Yok</option>
+    <div class="register-container">
+        <video class="video-background" autoPlay loop muted>
+          <source src="images/RegisterVid.mp4" type="video/mp4" />
+        </video>
+        <form class="register-form" id="registerForm">
+          <h1 class="register-header">Register</h1>
+          <div class="register-error"></div>
+          <input
+            name="Name"
+            type="text"
+            minlength=3
+            maxlength=100
+            placeholder="Name"
+            class="register-input"
+            required
+          />
+          <input
+            name="Surname"
+            type="text"
+            minlength=3
+            maxlength=100
+            placeholder="Surname"
+            class="register-input"
+            required
+          />
+          <input
+            name="Email"
+            type="email"
+            placeholder="Email"
+            class="register-input"
+            required
+          />
+          <input
+            name="Password"
+            type="password"
+            placeholder="Password"
+            class="register-input"
+            required
+          />
+          <input
+            name="ConfirmPassword"
+            type="password"
+            placeholder="Confirm Password"
+            class="register-input"
+            required
+          />
+          <div class="register-input">
+            <span>Are you a University student?</span>
+            <label><input type="radio" name="student" value="yes" required>Yes</label>
+            <label><input type="radio" name="student" value="no">No</label>
+          </div>
+          <select id="uni" name="uni_name" class="register-input" required>
+            <option value="0">Select your University</option>
         <% uni_id_title.forEach(element => { %>
             <option value="<%= element._id  %>"><%= element.title%></option>
             <% }) %>
     </select><br><br>
-
-  </form>
-
-  <button onclick="createRegForm()">Kayıt OL</button>
+          <button type="submit" class="register-button">
+            Register
+          </button>
+          <div class="register-footer">
+            Already have an account?  <a href="./login">Sign in</a>
+          </div>
+        </form>
+      </div>
+      <script src="/js/register.js"></script>
 </body>
-
-
-
 </html>
-
-</html>
-

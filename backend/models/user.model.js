@@ -18,8 +18,7 @@ const userSchema = new Schema({
       default: false
         },
     uni_id: {
-      type: String,
-      unique:true
+      type: String
         },  
     email: {
       type: String,
