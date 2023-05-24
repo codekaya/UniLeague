@@ -1,12 +1,3 @@
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myList li").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-
 async function logout(){
   const response = await fetch("http://localhost:5000/user/logout", {
       method: 'GET',
@@ -21,19 +12,12 @@ async function logout(){
     });
 }
 
-var myList = document.getElementById("myList");
-var listItems = myList.getElementsByTagName("li");
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myList li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
 
-// Sadece belirli öğeyi göster
-function showItem(index) {
-
-  for (var i = 0; i < listItems.length; i++) {
-    listItems[i].style.display = "none";
-  }
-
-  // Belirli öğeyi göster
-  var item = document.getElementById("item" + index);
-  if (item) {
-    item.style.display = "block";
-  }
-}

@@ -7,6 +7,7 @@
     <title>Home | Unileague</title>
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="/js/home.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
@@ -26,6 +27,8 @@
                     <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
                 </ul>
                 <% if (userType==="loggedIn") { %>
+                  <a class="btn btn-primary shadow" role="button" href="user/profile"> &nbsp;Profilim&nbsp;&nbsp; </a>
+                  &nbsp;&nbsp;
                   <a class="btn btn-primary shadow" role="button" onclick="logout()">Çıkış Yap</a>
                 <% } else { %>
                   <a class="btn btn-primary shadow" role="button" href="/login">Giriş Yap</a>
@@ -46,17 +49,23 @@
                    <br><br><br><br>
                     <h2 class="fw-bold" style="color:black">Üniversite sayfasına gitmek için hemen aramaya başla</h2>
                     <br>
-                    <div class="input-group">
-                      <input type="text" id="myInput" class="form-control custom-input" placeholder="Keşfet... Bir üniversite ya da öğrenci için ara">
-                    </div>
+                          <div class="form">
+                            <i class="fa fa-search"></i>
+                            <input type="text" id="myInput" class="form-control form-input" placeholder="Universite için ara">
+                            <span class="left-pan"><i class="fa fa-university"></i></span>
+                          </div>
+                          
+                          <ul class="list-group" id="myList">
+                            <% all_uni_info.forEach(element => { %>
+                              <li class="list-group-item bg-white">
+                                  <a href="/university/?id=<%=element._id%>"><span style="font-weight: bold;color:black"><%= element.title %></span></a>
+                              </li>
+                               <% }) %>
+                  </ul>
+                        </div>
+                     
                     <br>
-                   <ul class="list-group" id="myList">
-                              <% all_uni_info.forEach(element => { %>
-                                <li class="list-group-item bg-white">
-                                    <a href="/university/?id=<%=element._id%>"><span style="font-weight: bold;color:black"><%= element.title %></span></a>
-                                </li>
-                                 <% }) %>
-                    </ul>
+                   
                 </div>
             </div>
         </div>
