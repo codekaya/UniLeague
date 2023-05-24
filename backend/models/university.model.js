@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const University = mongoose.model('University',mongoose.Schema({
     title: String,
-    web_adress: String,
+    web_address: String,
     email: String,
     phone: String,
     Type: String,

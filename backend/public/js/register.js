@@ -1,4 +1,10 @@
+
+
 async function register(event){
+
+  
+  const errorContainer = document.getElementById('error-container');
+  errorContainer.innerHTML = '';
   event.preventDefault()
   const formData = new FormData(document.getElementById('registerForm'))
   const requestBody = {

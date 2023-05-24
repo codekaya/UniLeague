@@ -115,20 +115,21 @@
               />
                             </div>
                             <div class="form-outline mb-4">
-                              <span>Üniversite öğrencisi misin?&emsp;</span>
-                <label><input type="radio" name="student" value="yes" required> Evet&emsp;</label>
-                <label><input type="radio" name="student" value="no"> Hayır</label>
+                              <span style="color:black; font-weight: bold;">Üniversite öğrencisi misin?&emsp;</span>
+                <label><input type="radio" name="student" value="yes" style="color:black; font-weight: bold;" required> Evet&emsp;</label>
+                <label><input type="radio" name="student" value="no"  style="color:black; font-weight: bold;"> Hayır</label>
                             </div>
                             <div class="form-outline mb-4">
-                              <select id="uni" name="uni_name" class="register-input" required>
-                                <option value="0">Üniversiteni Seç</option>
+                              <select id="uni" name="uni_name" class="dropdown-menu" required>
+                                <option class="dropdown-item"value="0">Üniversiteni Seç</option>
                             <% uni_id_title.forEach(element => { %>
                                 <option value="<%= element._id  %>"><%= element.title%></option>
                                 <% }) %>
                         </select>
                             </div>
                             <div class="pt-1 mb-4">
-                              <button class="btn btn-dark btn-lg btn-block login-button" type="submit">Kayıt Ol</button>
+                              <br><br><br>
+                              <button class="btn btn-dark btn-lg btn-block login-button " type="submit" style="position: relative;">Kayıt Ol</button>
                             </div>
                             <div id="error-container">
                 
