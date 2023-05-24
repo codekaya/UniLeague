@@ -24,9 +24,16 @@
                     <li class="nav-item"><a class="nav-link" href="#">Karşılaştır</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Genel Sıralama</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
-                </ul><a id="loginBtn" class="btn btn-primary shadow" role="button" href="/login">Giriş Yap</a>
+                </ul>
+                <% if (userType==="loggedIn") { %>
+                  <a class="btn btn-primary shadow" role="button" onclick="logout()">Çıkış Yap</a>
+                <% } else { %>
+                  <a class="btn btn-primary shadow" role="button" href="/login">Giriş Yap</a>
+                <% } %>
                 &nbsp;&nbsp;
-                </ul><a id="registerBtn" class="btn btn-primary shadow" role="button" href="/register">Kayıt Ol</a>
+                </ul><% if (userType==="visitor") { %>
+                  <a id="registerBtn" class="btn btn-primary shadow" role="button" href="/register">Kayıt Ol</a>
+                <% } %>
             </div>
         </div>
     </nav>
@@ -37,7 +44,7 @@
                    <div class="container"><img class="img-fluid d-block mx-auto mb-5" src="images/uni.png" width="400" height="400">
                    </div>
                    <br><br><br><br>
-                    <h2 class="fw-bold" style="color:black">Üniversite sayfasına gitmek hemen aramaya başla</h2>
+                    <h2 class="fw-bold" style="color:black">Üniversite sayfasına gitmek için hemen aramaya başla</h2>
                     <br>
                     <div class="input-group">
                       <input type="text" id="myInput" class="form-control custom-input" placeholder="Keşfet... Bir üniversite ya da öğrenci için ara">

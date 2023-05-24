@@ -9,11 +9,24 @@ let User = require('../models/user.model');
 
 router.route('/').get(async (req,res)=>{
     try {
+        res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+        res.header("Pragma", "no-cache");
+        res.header("Expires", 0);
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
         const all_uni_info = await University.find({},{ _id: 1,title: 1})
         res.render("home",{
+            userType:"loggedIn",
             all_uni_info:all_uni_info
           })
     } catch (e) {
+        if(e.name === "JsonWebTokenError"){
+            const all_uni_info = await University.find({},{ _id: 1,title: 1})
+            return res.render("home",{
+                userType:"visitor",
+                all_uni_info:all_uni_info
+            })
+        }
         const error = e;
         res.send({success: false, error: error }).status(400)   
     }

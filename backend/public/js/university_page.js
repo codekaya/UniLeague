@@ -71,10 +71,7 @@ async function addComment(uni_id){
     });
 }
 
-if(performance.navigation.type == 2){
-  location.reload(true);
-}
-
+location.reload(nocache)
 
 async function giveRating(uni_id){
   const response = await fetch(`http://localhost:5000/university/rate?id=${uni_id}`, {
