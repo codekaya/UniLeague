@@ -26,13 +26,13 @@
                   </svg></span><span>UNILEAGUE</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
           <div class="collapse navbar-collapse" id="navcol-1">
               <ul class="navbar-nav mx-auto">
-                  <li class="nav-item"><a class="nav-link active" href="#">Anasayfa</a></li>
+                  <li class="nav-item"><a class="nav-link" href="/">Anasayfa</a></li>
                   <li class="nav-item"><a class="nav-link" href="#">Karşılaştır</a></li>
                   <li class="nav-item"><a class="nav-link" href="#">Genel Sıralama</a></li>
                   <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
               </ul><a class="btn btn-primary shadow" role="button" href="/login">Giriş Yap</a>
               &nbsp;&nbsp;
-              </ul><a class="btn btn-primary shadow" role="button" href="/register">Kayıt OL</a>
+              </ul><a class="btn btn-primary shadow" role="button" href="/register">Kayıt Ol</a>
           </div>
       </div>
   </nav>
@@ -44,14 +44,14 @@
               <source src="images/RegisterVid.mp4" type="video/mp4" />
             </video>
             <form class="register-form" id="registerForm">
-              <h1 class="register-header">Register</h1>
+              <h1 class="register-header">Kayıt Ol</h1>
               <div class="register-error"></div>
               <input
                 name="Name"
                 type="text"
                 minlength=3
                 maxlength=100
-                placeholder="Name"
+                placeholder="İsim"
                 class="register-input"
                 required
               />
@@ -60,47 +60,47 @@
                 type="text"
                 minlength=3
                 maxlength=100
-                placeholder="Surname"
+                placeholder="Soyisim"
                 class="register-input"
                 required
               />
               <input
                 name="Email"
                 type="email"
-                placeholder="Email"
+                placeholder="e-posta"
                 class="register-input"
                 required
               />
               <input
                 name="Password"
                 type="password"
-                placeholder="Password"
+                placeholder="Şifre"
                 class="register-input"
                 required
               />
               <input
                 name="ConfirmPassword"
                 type="password"
-                placeholder="Confirm Password"
+                placeholder="Şifreyi onayla"
                 class="register-input"
                 required
               />
               <div class="register-input">
-                <span>Are you a University student?</span>
-                <label><input type="radio" name="student" value="yes" required>Yes</label>
-                <label><input type="radio" name="student" value="no">No</label>
+                <span>Üniversite öğrencisi misin?&emsp;</span>
+                <label><input type="radio" name="student" value="yes" required> Evet&emsp;</label>
+                <label><input type="radio" name="student" value="no"> Hayır</label>
               </div>
               <select id="uni" name="uni_name" class="register-input" required>
-                <option value="0">Select your University</option>
+                <option value="0">Üniversiteni Seç</option>
             <% uni_id_title.forEach(element => { %>
                 <option value="<%= element._id  %>"><%= element.title%></option>
                 <% }) %>
         </select><br><br>
               <button type="submit" class="register-button">
-                Register
+                Kaydol
               </button>
               <div class="register-footer">
-                Already have an account?  <a href="./login">Sign in</a>
+                Zaten üye misin?  <a href="./login">Giriş yap</a>
               </div>
             </form>
           </div>

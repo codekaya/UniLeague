@@ -25,6 +25,18 @@ router.route('/').get(async (req,res) =>{
     
 });
 
+router.route('/verifyToken').get(async (req,res) =>{
+    try {
+        const accessToken = req.cookies["access-token"];
+        verify(accessToken , process.env.JWT_SECRET);
+        res.send({success:true});
+    } catch (e) {
+        const error = e;
+        res.send({success: false, error: error })   
+    }
+    
+});
+
 router.route('/profile').get(async (req, res) => {
     try {
         const accessToken = req.cookies["access-token"];
@@ -59,8 +71,6 @@ router.route('/show_comments').get(async (req,res)=>{
 
 
 router.route('/register').post( async (req,res) =>{
-  
-
     const result  = await register(req.body.email, req.body.password,req.body.name,req.body.last_name,req.body.isUniStudent,req.body.uni_id);
     if(result.success){
         res.send({success:true})

@@ -17,7 +17,7 @@
   min-width: 40%;
   max-width: 300px; /* add a max-width to prevent it from becoming too wide */
   margin: 0 auto; /* center horizontally */
-  max-height: 60%;
+  max-height: 80%;
    max-width: 60%;
    overflow-y:auto;
    overflow-x: hidden;
