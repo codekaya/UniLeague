@@ -9,6 +9,22 @@ async function register(event){
     isUniStudent: document.querySelector('input[name="student"]:checked').value === 'yes',
     uni_id: formData.get('uni_name')
   }
+  if(requestBody.isUniStudent && requestBody.uni_id==="0"){
+    const errorMessage = document.createElement('div');
+            errorMessage.className = 'alert alert-danger';
+            errorMessage.style.backgroundColor = 'white';
+            errorMessage.style.color = 'red';
+            errorMessage.style.fontWeight = 'bold';
+            errorMessage.style.textAlign = 'center';
+            errorMessage.textContent = 'Bir üniversite seçmelisiniz!';
+    
+            // Hata mesajını görüntülemek için bir yer seçin (örneğin, bir <div> elementi)
+            const errorContainer = document.getElementById('error-container');
+    
+            // Hata mesajını ekleyin
+            errorContainer.appendChild(errorMessage);
+    return
+  }
   const response = await fetch(`http://localhost:5000/user/register`, {
     credentials:'include',
     headers:{
@@ -23,7 +39,19 @@ async function register(event){
           window.location.href = '/login';
       }
       else{
-          alert(data.error.name)
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'alert alert-danger';
+        errorMessage.style.backgroundColor = 'white';
+        errorMessage.style.color = 'red';
+        errorMessage.style.fontWeight = 'bold';
+        errorMessage.style.textAlign = 'center';
+        errorMessage.textContent = data.error.name;
+
+        // Hata mesajını görüntülemek için bir yer seçin (örneğin, bir <div> elementi)
+        const errorContainer = document.getElementById('error-container');
+
+        // Hata mesajını ekleyin
+        errorContainer.appendChild(errorMessage);
       }
     });
   }

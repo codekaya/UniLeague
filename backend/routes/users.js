@@ -25,18 +25,6 @@ router.route('/').get(async (req,res) =>{
     
 });
 
-router.route('/verifyToken').get(async (req,res) =>{
-    try {
-        const accessToken = req.cookies["access-token"];
-        verify(accessToken , process.env.JWT_SECRET);
-        res.send({success:true});
-    } catch (e) {
-        const error = e;
-        res.send({success: false, error: error })   
-    }
-    
-});
-
 router.route('/profile').get(async (req, res) => {
     try {
         const accessToken = req.cookies["access-token"];

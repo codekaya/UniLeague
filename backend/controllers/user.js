@@ -74,7 +74,7 @@ const register = async(email, unhashed,name,last_name,isUniStudent,uni_id) =>{
 
         const password = hash;
         const newUser = new User({email, password,name,last_name,isUniStudent,uni_id});
-        console.log(newUser);
+        //console.log(newUser);
         const user = await newUser.save();
         //sentEmail(user.email)
         return {success: true};    
