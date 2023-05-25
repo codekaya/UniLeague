@@ -31,7 +31,7 @@ router.route('/profile').get(async (req, res) => {
         const token = verify(accessToken , process.env.JWT_SECRET);
        
         const user = await User.findOne( {_id: token.id});
-        res.render("profile",{
+        res.render("profilev2",{
            user_info:user
           })
     } catch (e) {
@@ -186,6 +186,19 @@ router.route('/getEmailCode').post(async (req, res) => {
         const error = e;
         res.send({success: false, error: error })  
     }
+})
+
+router.route('/changePhoneNumber').post(async(req,res) => {
+
+    const accessToken = req.cookies["access-token"];
+    const token = verify(accessToken , process.env.JWT_SECRET);
+
+     console.log(token.id)
+     
+     const result = await User.findOneAndUpdate({_id : token.id},{
+        phone: req.body.email
+     })
+     console.log(result)
 })
 
 router.route('/logout').get(isValidated, async (req,res) => {
