@@ -1,6 +1,11 @@
 $(document).ready(function(){
     
-    var table = $('#example').DataTable();
+    var table = $('#example').DataTable({
+      order:[[8,'desc']],
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/1.13.4/i18n/tr.json"
+      }
+    });
     
     table.buttons().container()
     .appendTo('#example_wrapper :eq(0)');
