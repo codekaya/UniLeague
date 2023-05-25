@@ -27,9 +27,15 @@ const userSchema = new Schema({
     },
     phone: {
       type: String,
-      required: true,
-      unique:true,
-      default: "00000000000"
+      default: ""
+    },
+    faculty: {
+      type: String,
+      default: ""
+    },
+    address: {
+      type: String,
+      default: ""
     },
     password: {
       type: String,
@@ -54,7 +60,30 @@ const userSchema = new Schema({
       required: true,
       default: false
   },
-
+    web_url: {
+      type: String,
+      default: ""
+  },
+  github_url: {
+      type: String,
+      default: ""
+  },
+  twitter_url: {
+      type: String,
+      default: ""
+  },
+  instagram_url: {
+      type: String,
+      default: ""
+  },
+  facebook_url: {
+      type: String,
+      default: ""
+  },
+  about:{
+      type:String,
+      default: ""
+  }
 }
 ); 
 

@@ -65,13 +65,12 @@ function isEmailValid(email) {
     return true;
 }
 
-const register = async(email, unhashed,name,last_name,isUniStudent,uni_id) =>{
+const register = async(email, unhashed,name,last_name,isUniStudent,uni_id,) =>{
     try{
         if(isUniStudent)
         if(!isEmailValid(email)){ return {success: false, error: "INVALID EMAIL"}}
         if(unhashed.length>40 || unhashed.length<14){return {success: false, error: "PASSWORD LENGTH MUST BE BETWEEN 14 to 40 CHARACTERS"}}
         const hash = await bcrypt.hash(unhashed, 10)
-
         const password = hash;
         const newUser = new User({email, password,name,last_name,isUniStudent,uni_id});
         //console.log(newUser);
