@@ -8,6 +8,7 @@ let User = require('../models/user.model');
 
 
 router.route('/').get(async (req,res)=>{
+
     try {
         res.header("Cache-Control", "no-cache, no-store, must-revalidate");
         res.header("Pragma", "no-cache");

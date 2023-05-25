@@ -32,12 +32,19 @@ router.route('/profile').get(async (req, res) => {
         const token = verify(accessToken , process.env.JWT_SECRET);
        
         const user = await User.findOne( {_id: token.id});
-        const uni = await University.findOne({_id:user.uni_id});
+        if (user.isUniStudent){
+            const uni = await University.findOne({_id:user.uni_id});
+            res.render("profilev2",{
+                user_info:user,
+                uni_info:uni
+               })
+        }
+        else {
+            res.render("profilev2",{
+                user_info:user,
+               })
+        }
 
-        res.render("profilev2",{
-           user_info:user,
-           uni_info:uni
-          })
     } catch (e) {
         const error = e;
         res.send({success: false, error: error })  

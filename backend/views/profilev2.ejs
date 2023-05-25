@@ -43,12 +43,16 @@
       <div class="col-lg-4">
         <div class="card mb-4">
           <div class="card-body text-center">
-            <img src="/images/uni_student.jpg" alt="avatar"
-              class="rounded-circle img-fluid" style="width: 150px;">
+            <% if (user_info.isUniStudent) { %>
+              <img src="/images/uni_student.jpg" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+          <% } else { %>
+              <img src="/images/aday.png" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+          <% } %>
             <h5 class="my-3"><%= user_info.name %></h5>
-            <p class="text-muted mb-1"><%= uni_info.title %></p>
+            <% if (user_info.isUniStudent) { %>
+              <p class="text-muted mb-1"><%= uni_info.title %></p>
+              <% } %>
             <p class="text-muted mb-4"><%= user_info.faculty %></p>
-   
           </div>
         </div>
         <div class="card mb-4 mb-lg-0">
@@ -121,17 +125,18 @@
               </div>
             </div>
             <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Üniversite</p>
+            <% if (user_info.isUniStudent) { %>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Üniversite</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0 position-relative" id="phone"><%= uni_info.title %> 
+                  </p>
+                </div>
               </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0 position-relative" id="phone"><%= uni_info.title %>
-                  
-                </p>
-              </div>
-            </div>
             <hr>
+            
             <div class="row">
               <div class="col-sm-3">
                 <p class="mb-0">Bölüm</p>
@@ -145,6 +150,7 @@
               </div>
             </div>
             <hr>
+            <% } %>
             <div class="row">
               <div class="col-sm-3">
                 <p class="mb-0">Address</p>
@@ -166,6 +172,9 @@
           <div class="col-md-6">
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
+                <div class="text-center">
+                  <p class="font-weight-bold">Kimim Ben?</p>
+              </div>
                 <p id="about_text"><%= user_info.about %></p>
                 <button class="btn float-end" onclick="editAbout()">
                   <i class="fa-solid fa-pen-to-square fa-beat-fade"></i>
@@ -174,34 +183,45 @@
             </div>
           </div>
           <div class="col-md-6">
+            <% if (user_info.isUniStudent) { %>
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
-                <p class="mb-4"><span class="text-primary font-italic me-1"><%= uni_info.title %></span> için toplam puanı <span class="text-primary font-italic fw-bold me-1" style="font-size: 1.2em;"><%= ((user_info.ratingPoints[0] + user_info.ratingPoints[1] + user_info.ratingPoints[2] + user_info.ratingPoints[3]) / 4).toFixed(1) %></span>
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Eğitim Puanı</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style= "width:<%=user_info.ratingPoints[0]%>0%" aria-valuenow="0"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Barınma Puanı</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width:<%=user_info.ratingPoints[1]%>0%" aria-valuenow="72"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Ulaşım Puanı</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width:<%=user_info.ratingPoints[2]%>0%" aria-valuenow="89"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Kampüs Puanı</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width:<%=user_info.ratingPoints[3]%>0%" aria-valuenow="55"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+
+                  <p class="mb-4"><span class="text-primary font-italic me-1"><%= uni_info.title %></span> için toplam puanı <span class="text-primary font-italic fw-bold me-1" style="font-size: 1.2em;"><%= isNaN(((user_info.ratingPoints[0] + user_info.ratingPoints[1] + user_info.ratingPoints[2] + user_info.ratingPoints[3]) / 4).toFixed(1)) ? 0 : ((user_info.ratingPoints[0] + user_info.ratingPoints[1] + user_info.ratingPoints[2] + user_info.ratingPoints[3]) / 4).toFixed(1)%></span>
+                  </p>
+                  <p class="mb-1" style="font-size: .77rem;">Eğitim Puanı</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style= "width:<%=user_info.ratingPoints[0]%>0%" aria-valuenow="0"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Barınma Puanı</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width:<%=user_info.ratingPoints[1]%>0%" aria-valuenow="72"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Ulaşım Puanı</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width:<%=user_info.ratingPoints[2]%>0%" aria-valuenow="89"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Kampüs Puanı</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width:<%=user_info.ratingPoints[3]%>0%" aria-valuenow="55"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
               </div>
+              
             </div>
           </div>
         </div>
+        <% } else { %>
+          <div class="card mb-4 mb-md-0">
+            <div class="card-body">
+            <img src="/images/bb.jpg" alt="" width="380px">
+              </button>
+            </div>
+          </div>  
+          <% } %>
       </div>
     </div>
   </div>
