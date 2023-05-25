@@ -33,14 +33,26 @@ router.route('/').get(async (req,res)=>{
 })
 
 router.route('/login').get(async (req,res)=>{
-    res.render('login')
+    try {
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+    } catch (error) {
+        return res.render("login")
+    }
+    res.redirect("/")
 })
 
 router.route('/register').get(async (req,res)=>{
-    const uni_id_title = await University.find({}, { _id: 1, title: 1 });
-    res.render("register",{
-        uni_id_title:uni_id_title
-      })
+    const accessToken = req.cookies["access-token"];
+    try {
+        const token = verify(accessToken , process.env.JWT_SECRET);
+    } catch (error) {
+        const uni_id_title = await University.find({}, { _id: 1, title: 1 });
+        return res.render("register",{
+            uni_id_title:uni_id_title
+          })
+    }
+    res.redirect("/")
 })
 
 module.exports = router;

@@ -22,13 +22,22 @@
                     </svg></span><span>UNILEAGUE</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">Anasayfa</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Anasayfa</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Karşılaştır</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#">Genel Sıralama</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/ranking">Genel Sıralama</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
-                </ul><a class="btn btn-primary shadow" role="button" href="/login">Giriş Yap</a>
+                </ul>
+                <% if (userType==="loggedIn") { %>
+                  <a class="btn btn-primary shadow" role="button" href="user/profile"> &nbsp;Profilim&nbsp;&nbsp; </a>
+                  &nbsp;&nbsp;
+                  <a class="btn btn-primary shadow" role="button" onclick="logout()">Çıkış Yap</a>
+                <% } else { %>
+                  <a class="btn btn-primary shadow" role="button" href="/login">Giriş Yap</a>
+                <% } %>
                 &nbsp;&nbsp;
-                </ul><a class="btn btn-primary shadow" role="button" href="/register">Kayıt Ol</a>
+                </ul><% if (userType==="visitor") { %>
+                  <a id="registerBtn" class="btn btn-primary shadow" role="button" href="/register">Kayıt Ol</a>
+                <% } %>
             </div>
         </div>
     </nav>

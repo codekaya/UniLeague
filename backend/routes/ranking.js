@@ -9,9 +9,21 @@ let User = require('../models/user.model');
 
 router.route('/').get(async (req,res)=>{
     const all_uni_info = await University.find({},{})
-    res.render('ranking',{
-        all_uni_info:all_uni_info
-    })
+    try {
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+        res.render('ranking',{
+            userType:"loggedIn",
+            all_uni_info:all_uni_info
+        })
+    } catch (error) {
+        if(error.name === "JsonWebTokenError"){
+            res.render('ranking',{
+                userType:"visitor",
+                all_uni_info:all_uni_info
+            })
+        }
+    }
 })
 
 

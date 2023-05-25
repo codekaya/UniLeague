@@ -20,3 +20,16 @@ $(document).ready(function(){
 });
 
 
+async function logout(){
+  const response = await fetch("http://localhost:5000/user/logout", {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials:"include"
+    });
+    response.json().then(data => {
+      window.location.href = '/ranking'
+    });
+}
