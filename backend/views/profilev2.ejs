@@ -66,7 +66,7 @@
         </div>
         <div class="card mb-4 mb-lg-0">
           <div class="card-body p-0">
-            <button type="button" class="btn btn-outline-primary" id="smEditBtn" onclick="enableSocialMediaForm()"><i class="bi bi-pen"></i></button>
+            <button type="button" class="btn" id="smEditBtn" onclick="enableSocialMediaForm()" style="float: right;"><i class="bi bi-pen"></i></button>
             <form class="form-group" id="smForm">
             <ul class="list-group list-group-flush rounded-3">
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
@@ -100,7 +100,9 @@
                 <input class="form-control sm-form sm-disable" id="face-text" value="<%= user_info.facebook_url %>" readonly maxlength="21">
               </li>
             </ul>
-            <button type="submit" id="smFormSubmitBtn" class="btn btn-primary sm-hide">Kaydet</button>
+              <button type="submit" id="smFormSubmitBtn" class="btn sm-hide" style="float: right;">
+              <i class="fa-sharp fa-solid fa-bookmark"></i>
+            </button>
           </div>
         </form>
         </div>

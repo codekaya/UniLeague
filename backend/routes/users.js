@@ -238,7 +238,7 @@ router.route('/changePhoneNumber').post(async(req,res) => {
 
     const accessToken = req.cookies["access-token"];
     const token = verify(accessToken , process.env.JWT_SECRET);
-    const result = await User.findOneAndUpdate({_id : token.id},{ phone: req.body.email })
+    const result = await User.findOneAndUpdate({_id : token.id},{ phone: req.body.phone })
 })
 
 router.route('/changeFaculty').post(async(req,res) => {
