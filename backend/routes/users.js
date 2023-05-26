@@ -35,16 +35,17 @@ router.route('/profile').get(async (req, res) => {
         if (user.isUniStudent){
             const uni = await University.findOne({_id:user.uni_id});
             res.render("profilev2",{
+                userType:'loggedIn',
                 user_info:user,
                 uni_info:uni
                })
         }
         else {
             res.render("profilev2",{
+                userType:'loggedIn',
                 user_info:user,
                })
         }
-
     } catch (e) {
         const error = e;
         res.send({success: false, error: error })  
@@ -220,46 +221,33 @@ router.route('/changeAddress').post(async(req,res) => {
     const result = await User.findOneAndUpdate({_id : token.id},{address: req.body.address})
 })
 
-router.route('/changeWeb').post(async(req,res) => {
-
-    const accessToken = req.cookies["access-token"];
-    const token = verify(accessToken , process.env.JWT_SECRET);
-    const result = await User.findOneAndUpdate({_id : token.id},{web_url: req.body.web})
-})
-
-router.route('/changeGithub').post(async(req,res) => {
-
-    const accessToken = req.cookies["access-token"];
-    const token = verify(accessToken , process.env.JWT_SECRET);
-    const result = await User.findOneAndUpdate({_id : token.id},{github_url: req.body.github})
-})
-
-router.route('/changeTwitter').post(async(req,res) => {
-
-    const accessToken = req.cookies["access-token"];
-    const token = verify(accessToken , process.env.JWT_SECRET);
-    const result = await User.findOneAndUpdate({_id : token.id},{twitter_url: req.body.twitter})
-})
-
-router.route('/changeInstagram').post(async(req,res) => {
-
-    const accessToken = req.cookies["access-token"];
-    const token = verify(accessToken , process.env.JWT_SECRET);
-    const result = await User.findOneAndUpdate({_id : token.id},{instagram_url: req.body.instagram})
-})
-
-router.route('/changeFacebook').post(async(req,res) => {
-
-    const accessToken = req.cookies["access-token"];
-    const token = verify(accessToken , process.env.JWT_SECRET);
-    const result = await User.findOneAndUpdate({_id : token.id},{facebook_url: req.body.facebook})
+router.route('/updateSocialMedia').post(async(req,res) => {
+    try{
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+        const result = await User.findOneAndUpdate({_id : token.id},{
+            web_url: req.body.web,
+            github_url: req.body.github,
+            instagram_url : req.body.instagram,
+            twitter_url : req.body.twitter,
+            facebook_url : req.body.face
+        })
+        res.send({success:true})
+    }
+    catch(error){
+        res.send({success:false,error:error}).status(400)
+    }
 })
 
 router.route('/changeAbout').post(async(req,res) => {
-
-    const accessToken = req.cookies["access-token"];
-    const token = verify(accessToken , process.env.JWT_SECRET);
-    const result = await User.findOneAndUpdate({_id : token.id},{about: req.body.about})
+    try {
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+        await User.findOneAndUpdate({_id : token.id},{about: req.body.about})
+        res.send({success:true})
+    } catch (error) {
+        res.send({success:false,error:error}).status(400)
+    }
 })
 
 router.route('/logout').get(isValidated, async (req,res) => {

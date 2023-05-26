@@ -1,0 +1,35 @@
+.sm-disable {
+    border: 0;
+    box-shadow: none; 
+}
+
+.sm-disable:focus {
+    border: 0;
+    box-shadow: none; 
+}
+
+.sm-hide{
+    display: none;
+}
+
+.ab-disable{
+    border: 0;
+    box-shadow: none; 
+}
+
+.ab-disable:focus {
+    border: 0;
+    box-shadow: none; 
+}
+
+.ab-hide{
+    display: none;
+}
+
+#abSubmitBtn{
+    margin-top: 10px;
+}
+
+textarea {
+    resize: none;
+  }

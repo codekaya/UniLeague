@@ -4,33 +4,42 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Projects - Brand</title>
+    <title>Profile | Unileague</title>
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
-    <script src="/js/profile.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="https://kit.fontawesome.com/f511ffda2f.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="/css/profile.css">
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </head>
 
 <body style="background-color: white;">
-    <nav class="navbar navbar-dark navbar-expand-md fixed-top navbar-shrink py-3 bg-dark" id="mainNav">
-        <div class="container">
-          <a class="navbar-brand d-flex align-items-center" href="/">
-                    </svg></span><span>UNILEAGUE</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#">Anasayfa</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Karşılaştır</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Genel Sıralama</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
-                </ul><a class="btn btn-primary shadow" role="button" href="/login">Giriş Yap</a>
-                &nbsp;&nbsp;
-                </ul><a class="btn btn-primary shadow" role="button" href="/register">Kayıt OL</a>
-            </div>
+  <nav class="navbar navbar-dark navbar-expand-md fixed-top navbar-shrink py-3 bg-dark" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+                </svg></span><span>UNILEAGUE</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Anasayfa</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Karşılaştır</a></li>
+                <li class="nav-item"><a class="nav-link" href="/ranking">Genel Sıralama</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
+            </ul>
+            <% if (userType==="loggedIn") { %>
+              <a class="btn btn-info" role="button" href="/user/profile"> &nbsp;Profilim&nbsp;&nbsp; </a>
+              &nbsp;&nbsp;
+              <a class="btn btn-primary shadow" role="button" onclick="logout()">Çıkış Yap</a>
+            <% } else { %>
+              <a class="btn btn-primary shadow" role="button" href="/login">Giriş Yap</a>
+            <% } %>
+            &nbsp;&nbsp;
+            </ul><% if (userType==="visitor") { %>
+              <a id="registerBtn" class="btn btn-primary shadow" role="button" href="/register">Kayıt Ol</a>
+            <% } %>
         </div>
-    </nav>
+    </div>
+</nav>
 
   <section style="background-color: white;">
   <div class="container py-5">
@@ -57,39 +66,43 @@
         </div>
         <div class="card mb-4 mb-lg-0">
           <div class="card-body p-0">
+            <button type="button" class="btn btn-outline-primary" id="smEditBtn" onclick="enableSocialMediaForm()"><i class="bi bi-pen"></i></button>
+            <form class="form-group" id="smForm">
             <ul class="list-group list-group-flush rounded-3">
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <button type="button" id="web" style="border: none; background: transparent;" onclick="editWeb()">
+                <button type="button" id="web" style="border: none; background: transparent;">
                   <i class="fas fa-globe fa-lg text-warning"></i>
                 </button>
-                <p class="mb-0" id="web-text"><%= user_info.web_url %></p>
+                <input class="form-control sm-form sm-disable" id="web-text" value="<%= user_info.web_url %>" readonly maxlength="21">
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-              <button type="button" id="github" style="border: none; background: transparent;" onclick="editGithub()">
+              <button type="button" id="github" style="border: none; background: transparent;">
                 <i class="fab fa-github fa-lg" style="color: #333333;"></i>
               </button>
-                <p class="mb-0" id="github-text"><%= user_info.github_url %></p>
+                <input class="form-control sm-form sm-disable" id="github-text" value="<%= user_info.github_url %>" readonly maxlength="21">
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-              <button type="button" id="twitter" style="border: none; background: transparent;" onclick="editTwitter()">
+              <button type="button" id="twitter" style="border: none; background: transparent;">
                 <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
               </button>
-                <p class="mb-0" id="twitter-text"><%= user_info.twitter_url %></p>
+                <input class="form-control sm-form sm-disable" id="twitter-text" value="<%= user_info.twitter_url %>" readonly maxlength="21">
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-              <button type="button" id="instagram" style="border: none; background: transparent;" onclick="editInstagram()">
+              <button type="button" id="instagram" style="border: none; background: transparent;">
                 <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
               </button>
-                <p class="mb-0" id="instagram-text"><%= user_info.instagram_url %></p>
+                <input class="form-control sm-form sm-disable" id="instagram-text" value="<%= user_info.instagram_url %>" readonly maxlength="21">
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <button type="button " id="facebook" style="border: none; background: transparent;" onclick="editFacebook()">
+                <button type="button " id="facebook" style="border: none; background: transparent;">
                 <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
               </button>
-                <p class="mb-0" id="face-text"><%= user_info.facebook_url %></p>
+                <input class="form-control sm-form sm-disable" id="face-text" value="<%= user_info.facebook_url %>" readonly maxlength="21">
               </li>
             </ul>
+            <button type="submit" id="smFormSubmitBtn" class="btn btn-primary sm-hide">Kaydet</button>
           </div>
+        </form>
         </div>
       </div>
       <div class="col-lg-8">
@@ -153,7 +166,7 @@
             <% } %>
             <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">Address</p>
+                <p class="mb-0">Adres</p>
               </div>
               <div class="col-sm-9">
                 <p class="text-muted mb-0 position-relative" id="address"><%= user_info.address %>
@@ -175,10 +188,15 @@
                 <div class="text-center">
                   <p class="font-weight-bold">Kimim Ben?</p>
               </div>
-                <p id="about_text"><%= user_info.about %></p>
-                <button class="btn float-end" onclick="editAbout()">
+              <form class="form-group" id="abForm">
+                <textarea class="form-control ab-disable" id="about_text" readonly maxlength="250" rows="6"><%= user_info.about %></textarea>
+                <a id="abEditBtn" class="btn float-end" onclick="enableAbForm()">
                   <i class="fa-solid fa-pen-to-square fa-beat-fade"></i>
+                </a>
+                <button class="btn btn-primary float-end ab-hide" id="abSubmitBtn" type="submit">
+                  <i class="bi bi-check"></i>
                 </button>
+              </form>
               </div>
             </div>
           </div>
@@ -226,7 +244,7 @@
     </div>
   </div>
 </section>
-
+<script src="/js/profile.js"></script> 
 </body>
     
 

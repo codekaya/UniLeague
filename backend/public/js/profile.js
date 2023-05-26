@@ -61,137 +61,95 @@ async function editAddress() {
   }
 }
 
-async function editWeb() {
+document.getElementById("smForm").addEventListener("submit", submitSmForm);
+document.getElementById("abForm").addEventListener("submit", submitAbForm);
 
-  var nameParagraph = document.getElementById("web-text");
-  var newWeb = prompt("Lütfen url'i giriniz.", nameParagraph.innerText);
-
-  if (newWeb) {
-    nameParagraph.innerText = newWeb;
-    const response = await fetch("http://localhost:5000/user/changeWeb", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Cookie' : 'access-token='
-      },
-      body: JSON.stringify({
-          web: newWeb
-        })
-      });
-      
+function enableSocialMediaForm(){
+  document.getElementsByClassName("sm-hide")[0].classList.remove("sm-hide")
+  document.getElementById("smEditBtn").classList.add(("sm-hide"))
+  let inputTags = document.getElementsByClassName("sm-form")
+  for(let i = 0;i<5;i++){
+    let element = inputTags[i]
+    element.removeAttribute("readonly")
+    element.classList.remove("sm-disable")
   }
 }
 
-async function editGithub() {
+function enableAbForm(){
+  let aboutInput = document.getElementById("about_text")
+  aboutInput.removeAttribute("readonly")
+  aboutInput.classList.remove("ab-disable")
+  document.getElementById("abEditBtn").classList.add("ab-hide")
+  document.getElementById("abSubmitBtn").classList.remove("ab-hide")
+}
 
-  var nameParagraph = document.getElementById("github-text");
-  var newGithub = prompt("Lütfen url'i giriniz.", nameParagraph.innerText);
-
-  if (newGithub) {
-    nameParagraph.innerText = newGithub;
-    const response = await fetch("http://localhost:5000/user/changeGithub", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Cookie' : 'access-token='
-      },
-      body: JSON.stringify({
-          github: newGithub
-        })
-      });
+function disableSocialMediaForm(){
+  document.getElementById("smFormSubmitBtn").classList.add("sm-hide")
+  document.getElementById("smEditBtn").classList.remove(("sm-hide"))
+  let inputTags = document.getElementsByClassName("sm-form")
+  for(let i = 0;i<5;i++){
+    let element = inputTags[i]
+    element.setAttribute("readonly","readonly")
+    element.classList.add("sm-disable")
   }
 }
 
-async function editTwitter() {
+function disableAbForm(){
+  let aboutInput = document.getElementById("about_text")
+  aboutInput.setAttribute("readonly","readonly")
+  aboutInput.classList.add("ab-disable")
+  document.getElementById("abEditBtn").classList.remove("ab-hide")
+  document.getElementById("abSubmitBtn").classList.add("ab-hide")
+}
 
-  var nameParagraph = document.getElementById("twitter-text");
-  var newTwitter = prompt("Lütfen url'i giriniz.", nameParagraph.innerText);
-
-  if (newTwitter) {
-    nameParagraph.innerText = newTwitter;
-    const response = await fetch("http://localhost:5000/user/changeTwitter", {
+async function submitSmForm(event){
+  event.preventDefault()
+  let inputTags = document.getElementsByClassName("sm-form")
+  const reqBody = {
+    web:inputTags[0].value,
+    github: inputTags[1].value,
+    twitter: inputTags[2].value,
+    instagram: inputTags[3].value,
+    face:inputTags[4].value
+  }
+  const response = await fetch("http://localhost:5000/user/updateSocialMedia", {
       method: 'POST',
+      credentials:'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(reqBody)
+      });
+  disableSocialMediaForm()
+}
+
+async function submitAbForm(event){
+  event.preventDefault();
+  const response = await fetch("http://localhost:5000/user/changeAbout", {
+      method: 'POST',
+      credentials:'include',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Cookie' : 'access-token='
       },
       body: JSON.stringify({
-          twitter: newTwitter
+          about: document.getElementById('about_text').value
         })
-      });
-  }
+    });
+    disableAbForm()
 }
 
-
-async function editInstagram() {
-
-  var nameParagraph = document.getElementById("instagram-text");
-  var newInstagram = prompt("Lütfen url'i giriniz.", nameParagraph.innerText);
-
-  if (newInstagram) {
-    nameParagraph.innerText = newInstagram;
-    const response = await fetch("http://localhost:5000/user/changeInstagram", {
-      method: 'POST',
+async function logout(){
+  const response = await fetch("http://localhost:5000/user/logout", {
+      method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Cookie' : 'access-token='
       },
-      body: JSON.stringify({
-          instagram: newInstagram
-        })
-      });
-  }
+      credentials:"include"
+    });
+    response.json().then(data => {
+      window.location.href = '/'
+    });
 }
-
-
-
-async function editFacebook() {
-
-  var nameParagraph = document.getElementById("face-text");
-  var newFacebook = prompt("Lütfen url'i giriniz.", nameParagraph.innerText);
-
-  if (newFacebook) {
-    nameParagraph.innerText = newFacebook;
-    const response = await fetch("http://localhost:5000/user/changeFacebook", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Cookie' : 'access-token='
-      },
-      body: JSON.stringify({
-          facebook: newFacebook
-        })
-      });
-
-  }
-}
-
-
-async function editAbout() {
-
-  var nameParagraph = document.getElementById("about_text");
-  var newAbout = prompt("Lütfen burayı doldurunuz.", nameParagraph.innerText);
-
-  if (newAbout) {
-    nameParagraph.innerText = newAbout;
-    const response = await fetch("http://localhost:5000/user/changeAbout", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Cookie' : 'access-token='
-      },
-      body: JSON.stringify({
-          about: newAbout
-        })
-      });
-  
-  }
-}
-
-
