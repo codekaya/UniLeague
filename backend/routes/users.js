@@ -30,7 +30,7 @@ router.route('/profile').get(async (req, res) => {
     try {
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);
-       
+        
         const user = await User.findOne( {_id: token.id});
         if (user.isUniStudent){
             const uni = await University.findOne({_id:user.uni_id});
@@ -47,10 +47,44 @@ router.route('/profile').get(async (req, res) => {
                })
         }
     } catch (e) {
+        if(e.name==="JsonWebTokenError"){
+            return res.redirect("/")
+        }
         const error = e;
         res.send({success: false, error: error })  
     }
 });
+
+router.route('/profile/:id').get(async (req,res)=>{
+    try{
+        let userType = "loggedIn"
+        const user = await User.findOne( {_id: req.params.id});
+        try{
+            const accessToken = req.cookies["access-token"];
+            const token = verify(accessToken , process.env.JWT_SECRET);
+        }
+        catch(error){
+            userType = "visitor"
+        }
+        if(user.isUniStudent){
+            const uni = await University.findOne({_id:user.uni_id});
+            res.render("profile",{
+                userType:userType,
+                user_info:user,
+                uni_info:uni
+            })
+        }
+        else {
+            res.render("profile",{
+                userType:userType,
+                user_info:user
+               })
+        }
+    }
+    catch(error){
+        res.send({success:false,error:error})
+    }
+})
 
 router.route('/show_comments').get(async (req,res)=>{
 
