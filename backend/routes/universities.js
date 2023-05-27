@@ -56,7 +56,8 @@ router.route('/rate').post(async (req,res)=>{
                 dorm_point :  dorm_point_fe,
                 trans_point :  trans_point_fe,
                 campus_point : campus_point_fe,
-                rate_count : 1
+                rate_count : 1,
+                unileague_point: (edu_point_fe + dorm_point_fe + trans_point_fe + campus_point_fe) / 4,
             }
         }, { new: true })
         const newRatingPoints = [edu_point_fe,dorm_point_fe,trans_point_fe,campus_point_fe]

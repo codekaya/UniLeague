@@ -15,7 +15,18 @@ const University = mongoose.model('University',mongoose.Schema({
     trans_point: Number,
     campus_point: Number,
     unileague_point: Number,
-    rate_count: Number
+    rate_count: Number,
+    on_lisans_toplam:Number,
+    lisans_toplam:Number,
+    yüksek_lisans_toplam:Number,
+    doktora_toplam:Number,
+    ogrenci_toplam:Number,
+    prof_toplam:Number,
+    docent_toplam:Number,
+    doktor_ogretim_uyesi_toplam:Number,
+    ogretım_gorevlisi_toplam:Number,
+    arastırma_gorevlisi_toplam:Number,
+    toplam_akademisyen:Number,
 }),'universities');
 
 module.exports = University;
