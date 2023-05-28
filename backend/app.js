@@ -37,14 +37,10 @@ connection.once('open', () => { console.log('Database connection established suc
 const userRouter = require('./routes/users');
 const universityRouter = require('./routes/universities')
 const homeRouter = require('./routes/home')
-const rankingRouter = require('./routes/ranking')
-const comparisionRouter = require('./routes/comparision')
 
 
 app.use('/user', userRouter);
 app.use('/university',universityRouter);
-app.use('/ranking',rankingRouter);
-app.use('/comparision',comparisionRouter);
 app.use('/',homeRouter)
 
 

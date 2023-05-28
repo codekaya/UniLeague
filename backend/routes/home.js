@@ -56,4 +56,45 @@ router.route('/register').get(async (req,res)=>{
     res.redirect("/")
 })
 
+router.route('/comparison').get(async (req,res)=>{
+    const all_uni_info = await University.find({},{})  
+    try{
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+        return res.render("comp",{
+                all_uni_info:all_uni_info,
+                userType:"loggedIn"
+           })
+    }
+    catch(error){
+        if(error.name==="JsonWebTokenError"){
+           return res.render("comp",{
+                all_uni_info:all_uni_info,
+                userType:"visitor"
+           })
+        }
+    }
+    
+});
+
+router.route('/ranking').get(async (req,res)=>{
+    const all_uni_info = await University.find({},{})
+    try {
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+        res.render('ranking',{
+            userType:"loggedIn",
+            all_uni_info:all_uni_info
+        })
+    } catch (error) {
+        if(error.name === "JsonWebTokenError"){
+            res.render('ranking',{
+                userType:"visitor",
+                all_uni_info:all_uni_info
+            })
+        }
+    }
+})
+
+
 module.exports = router;
