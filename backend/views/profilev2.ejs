@@ -14,7 +14,7 @@
 
 </head>
 
-<body style="background-color: white;">
+<body style="background-color: white;" >
   <nav class="navbar navbar-dark navbar-expand-md fixed-top navbar-shrink py-3 bg-dark" id="mainNav">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center" href="/">
@@ -108,6 +108,14 @@
         </div>
       </div>
       <div class="col-lg-8">
+        <% if (!user_info.isValidated) { %>
+
+          <div class="text-center">
+            <p class="text bg-danger text-white p-3 rounded">Lütfen e-postanızı daha iyi kullanım için onaylayınız!</p>
+          </div>
+         
+        <% } %>
+        
         <div class="card mb-4">
           <div class="card-body">
             <div class="row">
@@ -115,7 +123,7 @@
                   <p class="mb-0">İsim</p>
               </div>
               <div class="col-sm-9">
-                  <p class="text-muted mb-0"><%= user_info.name%> <%= user_info.last_name %></p>
+                  <p class="text mb-0 fw-bold"><%= user_info.name%> <%= user_info.last_name %></p>
               </div>
             <hr>
             <div class="row">
@@ -123,8 +131,21 @@
                 <p class="mb-0">Email</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0"><%= user_info.email %></p>
-              </div>
+                
+                <p class="text mb-0 fw-bold position-relative" id="email"><%= user_info.email %>
+                  <% if (!user_info.isValidated) { %>
+                    <button class="btn btn-block position-absolute top-0 start-100 translate-middle p-0 text-end" onclick="window.location.href='/verification'">
+                      <span style="color:red">Onayla</span>
+                    </button>
+
+                  <% } else { %>
+                    <button class="btn btn-white btn-sm position-absolute top-0 start-100 translate-middle p-0">
+                      <i class="fa-solid fa-check" style="color: #014af4;"></i>
+                    </button>
+                  <% } %>
+
+                </p>
+            </div>
             </div>
             <hr>
             <div class="row">
@@ -132,7 +153,7 @@
                 <p class="mb-0">Telefon</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0 position-relative" id="phone"><%= user_info.phone %>
+                <p class="text mb-0 fw-bold position-relative" id="phone"><%= user_info.phone %>
                   <button class="btn btn-white btn-sm position-absolute top-0 start-100 translate-middle p-0" onclick="editPhone()">
                     <i class="fa-solid fa-gear"></i>
                   </button>
@@ -146,7 +167,7 @@
                   <p class="mb-0">Üniversite</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0 position-relative" id="phone"><%= uni_info.title %> 
+                  <p class="text mb-0 fw-bold position-relative" id="phone"><%= uni_info.title %> 
                   </p>
                 </div>
               </div>
@@ -157,7 +178,7 @@
                 <p class="mb-0">Bölüm</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0 position-relative" id="faculty"><%= user_info.faculty %>
+                <p class="text mb-0 fw-bold position-relative" id="faculty"><%= user_info.faculty %>
                   <button class="btn btn-white btn-sm position-absolute top-0 start-100 translate-middle p-0 " onclick="editFaculty()">
                     <i class="fa-solid fa-gear"></i>
                   </button>
@@ -171,13 +192,15 @@
                 <p class="mb-0">Adres</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0 position-relative" id="address"><%= user_info.address %>
+                <p class="text mb-0 fw-bold position-relative" id="address"><%= user_info.address %>
                   <button class="btn btn-white btn-sm position-absolute top-0 start-100 translate-middle p-0" onclick="editAddress()">
                     <i class="fa-solid fa-gear"></i>
                   </button>
                 </p>
               </div>
             </div>
+
+            
 
           </div>
         </div>

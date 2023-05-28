@@ -31,7 +31,7 @@ async function sentEmail(email){
         Body: { /* required */
         Html: {
         Charset: "UTF-8",
-        Data: `Your Verification Code: ${accessCode} Expires in 5 minutes`
+        Data: `UNILEAGUE için doğrulama kodunuz: ${accessCode} Kod 5 dakika içinde geçersiz olacaktır. Eğer bu kodu siz istemediyseniz lütfen bu maili dikkate almayınız.`
         },
         Text: {
         Charset: "UTF-8",

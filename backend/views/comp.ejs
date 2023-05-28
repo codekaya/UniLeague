@@ -343,9 +343,9 @@ function selectUniversity(clickedId,divId) {
   divElement.querySelector("#toplam_akademisyen").innerText = selectedUni.toplam_akademisyen;
   
   var progressWidth = 0.6 * (selectedUni.unileague_point / selectedUni.rate_count) + 0.4 * (selectedUni.edu_point / selectedUni.rate_count);
-  if (progressWidth) {
-    var progressString = progressWidth * 10 + "0%";
-    console.log(progressString)
+  var intProgressWidth = parseInt(progressWidth); 
+  if (intProgressWidth) {
+    var progressString = intProgressWidth + "0%";
     divElement.querySelector("#progress_0").style.width = progressString
   }
   else {

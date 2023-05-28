@@ -51,7 +51,7 @@ async function register(event){
         errorMessage.style.color = 'red';
         errorMessage.style.fontWeight = 'bold';
         errorMessage.style.textAlign = 'center';
-        errorMessage.textContent = data.error.name;
+        errorMessage.textContent = data.error;
 
         // Hata mesajını görüntülemek için bir yer seçin (örneğin, bir <div> elementi)
         const errorContainer = document.getElementById('error-container');

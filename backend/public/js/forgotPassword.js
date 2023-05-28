@@ -41,11 +41,7 @@ async function sendVerificationCode(event){
                 errorMessage.style.fontWeight = 'bold';
                 errorMessage.style.textAlign = 'center';
                 errorMessage.textContent = data.error.name;
-        
-                // Hata mesajını görüntülemek için bir yer seçin (örneğin, bir <div> elementi)
                 const errorContainer = document.getElementById('error-container');
-        
-                // Hata mesajını ekleyin
                 errorContainer.appendChild(errorMessage);
             }
     });

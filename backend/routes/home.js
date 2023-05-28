@@ -77,6 +77,16 @@ router.route('/comparison').get(async (req,res)=>{
     
 });
 
+router.route('/verification').get(async (req,res)=>{
+
+    const accessToken = req.cookies["access-token"];
+    const token = verify(accessToken , process.env.JWT_SECRET);
+    res.render('verification',{
+ 
+    })
+     
+ });
+
 router.route('/ranking').get(async (req,res)=>{
     const all_uni_info = await University.find({},{})
     try {

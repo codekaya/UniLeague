@@ -202,10 +202,20 @@ router.route('/changeEmail').post(async (req, res) => {
     
 });
 router.route('/emailVerify').post(async (req, res) => {
+
+
     try {
         //console.log(req.body.email,req.body.accessCode)
-        const email = req.body.email;
+        // const email = req.body.email;
+
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+        const user = await User.findOne( {_id: token.id});
+
+        const email = user.email
         const accessNumber = req.body.accessCode;
+
+        console.log(req.body.accessCode)
 
         const time = Math.floor((new moment())/300000);
         const hash = crypto.createHash('sha1').update((email+time+"sjfgjsdfksjd")).digest('hex');
@@ -215,7 +225,7 @@ router.route('/emailVerify').post(async (req, res) => {
             res.send({success: true});
         }
         else{
-            res.send({success: false, error: "WRONG CODE"})
+            res.send({success: false, error: "Geçersiz Kod!"})
         }
     }
     catch(err){
@@ -223,6 +233,22 @@ router.route('/emailVerify').post(async (req, res) => {
         res.send({success: false, error: error});
     }
 });
+
+router.route('/getEmailCode').get(async (req, res) => {
+
+    try {
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+        const user = await User.findOne( {_id: token.id});
+        await sentEmail(user.email);
+        res.send({success: true});
+    } catch (e) {
+        const error = e;
+        res.send({success: false, error: error })  
+    }
+})
+
+
 router.route('/getEmailCode').post(async (req, res) => {
     try {
         const email = req.body.email;
