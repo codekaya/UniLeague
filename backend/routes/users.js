@@ -166,18 +166,18 @@ router.route('/changePassword').post(async (req, res) => {
 router.route('/resetPassword').post(async (req, res) => {
     try {
         const email = req.body.email;
-        const accessNumber = req.body.accessCode;
+        const accessNumber = req.body.emailCode;
         const unhashed = req.body.newPassword;
         const time = Math.floor((new moment())/300000);
         const hash = crypto.createHash('sha1').update((email+time+"sjfgjsdfksjd")).digest('hex');
         const Code = hash.substring(30,36);
-        if(accessNumber == Code){
+        if(accessNumber === Code){
             const newPassword = await bcrypt.hash(unhashed, 10)
             const log = await User.updateOne({email : email }, { password : newPassword });
             res.send({success: true});
         }
         else{
-            res.send({success: false, error: "WRONG CODE"})
+            res.send({success: false, error: {name:"Doğrulama kodu yanlış"}})
         }
         
     } catch (e) {
@@ -226,6 +226,10 @@ router.route('/emailVerify').post(async (req, res) => {
 router.route('/getEmailCode').post(async (req, res) => {
     try {
         const email = req.body.email;
+        const count = await User.count({ email: email },{limit:1})
+        if(!count){
+            throw {name:"Bu e-postaya kayıtlı hesap bulunamadı."}
+        }
         await sentEmail(email);
         res.send({success: true});
     } catch (e) {

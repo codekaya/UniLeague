@@ -96,5 +96,16 @@ router.route('/ranking').get(async (req,res)=>{
     }
 })
 
+router.route('/forgotPassword').get(async (req,res)=>{
+    try {
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+        res.redirect("/")
+    } catch (error) {
+        if(error.name==="JsonWebTokenError") return res.render('forgotPassword')
+        res.send({success:true,error:error})
+    }
+
+})
 
 module.exports = router;
