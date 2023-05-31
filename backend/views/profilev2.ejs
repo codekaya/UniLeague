@@ -199,22 +199,23 @@
                 </p>
               </div>
             </div>
-
-            
-
           </div>
         </div>
         </div>
         <br><br>
         <div class="row">
-          <div class="col-md-6">
+          <% if (user_info.isUniStudent) { %>
+            <div class="col-md-6">
+          <% } else { %>
+            <div class="col-md-12">
+          <% } %>
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
                 <div class="text-center">
                   <p class="font-weight-bold">Kimim Ben?</p>
               </div>
               <form class="form-group" id="abForm">
-                <textarea class="form-control ab-disable" id="about_text" readonly maxlength="250" rows="6"><%= user_info.about %></textarea>
+                <textarea class="form-control ab-disable" id="about_text" readonly maxlength="600" rows="6"><%= user_info.about %></textarea>
                 <a id="abEditBtn" class="btn float-end" onclick="enableAbForm()">
                   <i class="fa-solid fa-pen-to-square fa-beat-fade"></i>
                 </a>
