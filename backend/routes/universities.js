@@ -63,7 +63,7 @@ router.route('/rate').post(async (req,res)=>{
                 unileague_point: (edu_point_fe + dorm_point_fe + trans_point_fe + campus_point_fe) / 4,
             }
         }, { new: true })
-        const newRatingPoints = [edu_point_fe]
+        const newRatingPoints = [edu_point_fe,dorm_point_fe,trans_point_fe,campus_point_fe,rate_count,unileague_point]
         await User.updateOne(
             { _id: user._id },
             { $push: { ratingPoints: { $each: newRatingPoints } },
