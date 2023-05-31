@@ -14,10 +14,27 @@ router.route('/').get(async (req,res)=>{
         const uni = await University.findById(req.query.id)
         const uni_comment = await Comment.find({ uni_id: req.query.id })
         const user = await User.find({},{_id:1,name:1,last_name:1,uni_id:1})
+        let loggedUserId = null;
+        try {
+            const accessToken = req.cookies["access-token"];
+            const token = verify(accessToken , process.env.JWT_SECRET);
+            loggedUserId = token.id
+        } catch (error) {
+            return res.render("university_page",{
+                uni_info:uni,
+                comment_info: uni_comment,
+                user_info:user,
+                userType:"visitor",
+                isRated:true
+              })
+        }
+        const loggedUser = await User.findOne({_id:loggedUserId},{ratingPoints:1})
         res.render("university_page",{
             uni_info:uni,
             comment_info: uni_comment,
             user_info:user,
+            userType:"loggedIn",
+            isRated:loggedUser.ratingPoints.length===4 ? true : false
           })
     } catch (e) {
         const error = e;
@@ -52,7 +69,10 @@ router.route('/rate').post(async (req,res)=>{
         dorm_point_fe = parseInt(req.body.dorm_point)
         trans_point_fe = parseInt(req.body.trans_point)
         campus_point_fe = parseInt(req.body.campus_point)
-
+        if(edu_point_fe <= 0 || dorm_point_fe <= 0 || trans_point_fe <= 0 || campus_point_fe <= 0 || 
+            edu_point_fe > 10 || dorm_point_fe > 10 || trans_point_fe > 10 || campus_point_fe > 10 ){
+                return res.send({success:false,error:{name:'Rate should be between 1 and 10'}})
+            }
         const result = await University.findOneAndUpdate({_id : req.query.id},{
             $inc : {
                 edu_point : edu_point_fe,
@@ -63,7 +83,7 @@ router.route('/rate').post(async (req,res)=>{
                 unileague_point: (edu_point_fe + dorm_point_fe + trans_point_fe + campus_point_fe) / 4,
             }
         }, { new: true })
-        const newRatingPoints = [edu_point_fe,dorm_point_fe,trans_point_fe,campus_point_fe,rate_count,unileague_point]
+        const newRatingPoints = [edu_point_fe,dorm_point_fe,trans_point_fe,campus_point_fe]
         await User.updateOne(
             { _id: user._id },
             { $push: { ratingPoints: { $each: newRatingPoints } },
@@ -75,7 +95,7 @@ router.route('/rate').post(async (req,res)=>{
     } catch (e) {
         if(e.name === 'JsonWebTokenError'){
             redirectUrl = `/university/?id=${req.query.id}`;
-            return res.send('<script>alert("You need to login to rate universities."); window.location.href="' + redirectUrl + '";</script>');
+            return res.send({success:false,error:{name:"You need to login to rate"}});
         }
         const error = e;
         res.send({success: false, error: error }).status(400)   

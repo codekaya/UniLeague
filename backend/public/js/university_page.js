@@ -1,3 +1,4 @@
+
 async function likeComment(commentId) {
   const response = await fetch(`http://localhost:5000/university/like_comment?id=${commentId}`, {
     credentials:'include',
@@ -92,6 +93,10 @@ async function addComment(uni_id,conversation_id,content_section){
 
 
 async function giveRating(uni_id){
+  if(edu_point <= 0 || dorm_point <= 0 || trans_point <= 0 || campus_point <= 0 || 
+    edu_point > 10 || dorm_point > 10 || trans_point > 10 || campus_point > 10 ){
+        return alert('Rates should be between 0 and 1')
+    }
   const response = await fetch(`http://localhost:5000/university/rate?id=${uni_id}`, {
     credentials:'include',
     headers:{
@@ -100,10 +105,10 @@ async function giveRating(uni_id){
     },
     method: 'POST',
     body: `{
-      "edu_point":"${document.getElementById('edu_point').value}",
-      "dorm_point":"${document.getElementById('dorm_point').value}",
-      "trans_point":"${document.getElementById('trans_point').value}",
-      "campus_point":"${document.getElementById('campus_point').value}"}`,
+      "edu_point":"${edu_point}",
+      "dorm_point":"${dorm_point}",
+      "trans_point":"${trans_point}",
+      "campus_point":"${campus_point}"}`,
       
     });
     response.json().then(data => {
@@ -231,6 +236,11 @@ $(document).ready(function() {
   updateComments();
 });
 
+let edu_point = 0;
+let dorm_point = 0;
+let trans_point = 0;
+let campus_point = 0;
+
 function addStarRatingEvent() {
 
   const ratingSections = document.querySelectorAll('.star-rating');
@@ -243,10 +253,10 @@ function addStarRatingEvent() {
         const selectedRating = button.dataset.value;
 
         ratingButtons.forEach((btn) => {
-          const ratingValue = btn.dataset.value;
+          const ratingValue = btn.dataset.value-1;
           const starIcon = btn.querySelector('i');
 
-          if (ratingValue <= selectedRating) {
+          if (ratingValue <= selectedRating-1) {
             btn.classList.add('selected');
             starIcon.classList.remove('bi-star');
             starIcon.classList.add('bi-star-fill');
@@ -255,15 +265,40 @@ function addStarRatingEvent() {
             starIcon.classList.remove('bi-star-fill');
             starIcon.classList.add('bi-star');
           }
-        });
-
-        console.log(`Selected rating: ${selectedRating}`);
+          
+        }); 
+        switch(button.getAttribute("value")){
+          case "edu":
+            edu_point = selectedRating;
+            break;
+          case "dorm": 
+            dorm_point = selectedRating;
+            break;
+          case "campus":
+            campus_point = selectedRating
+            break;
+          case "transportation":
+            trans_point = selectedRating
+            break;
+        }
       });
     });
   });
 }
- 
 
+async function logout(){
+  const response = await fetch("http://localhost:5000/user/logout", {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials:"include"
+    });
+    response.json().then(data => {
+      window.location.href = '/'
+    });
+}
 
 
 

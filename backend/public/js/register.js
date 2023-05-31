@@ -24,10 +24,8 @@ async function register(event){
             errorMessage.style.textAlign = 'center';
             errorMessage.textContent = 'Bir üniversite seçmelisiniz!';
     
-            // Hata mesajını görüntülemek için bir yer seçin (örneğin, bir <div> elementi)
             const errorContainer = document.getElementById('error-container');
-    
-            // Hata mesajını ekleyin
+
             errorContainer.appendChild(errorMessage);
     return
   }
@@ -53,10 +51,8 @@ async function register(event){
         errorMessage.style.textAlign = 'center';
         errorMessage.textContent = data.error;
 
-        // Hata mesajını görüntülemek için bir yer seçin (örneğin, bir <div> elementi)
         const errorContainer = document.getElementById('error-container');
-
-        // Hata mesajını ekleyin
+        //errorContainer.classList.add("py-4")
         errorContainer.appendChild(errorMessage);
       }
     });

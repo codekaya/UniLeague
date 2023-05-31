@@ -14,10 +14,9 @@
 
     <script src="/js/university_page.js"></script>
     
-    <title>Document</title>
+    <title><%= uni_info.title %> | Unileague</title>
 </head>
 <body>
-
   <nav class="navbar navbar-dark navbar-expand-md fixed-top navbar-shrink py-3 bg-dark" id="mainNav">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center" href="/">
@@ -28,9 +27,18 @@
                 <li class="nav-item"><a class="nav-link" href="/comparison">Karşılaştır</a></li>
                 <li class="nav-item"><a class="nav-link" href="/ranking">Genel Sıralama</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
-            </ul><a class="btn btn-primary shadow" role="button" href="/login">Giriş Yap</a>
+            </ul>
+            <% if (userType==="loggedIn") { %>
+              <a class="btn btn-primary shadow" role="button" href="/user/profile"> &nbsp;Profilim&nbsp;&nbsp; </a>
+              &nbsp;&nbsp;
+              <a class="btn btn-primary shadow" role="button" onclick="logout()">Çıkış Yap</a>
+            <% } else { %>
+              <a class="btn btn-primary shadow" role="button" href="/login">Giriş Yap</a>
+            <% } %>
             &nbsp;&nbsp;
-            </ul><a class="btn btn-primary shadow" role="button" href="/register">Kayıt Ol</a>
+            </ul><% if (userType==="visitor") { %>
+              <a id="registerBtn" class="btn btn-primary shadow" role="button" href="/register">Kayıt Ol</a>
+            <% } %>
         </div>
     </div>
 </nav>
@@ -50,9 +58,6 @@
             <i class="fa-sharp fa-solid fa-envelope" style="color: #2907eb;"></i>
             <p class="mb-0 ms-3" style="display: inline;"><a href="https://mail.google.com/mail/?view=cm&to=<%= uni_info.email %>" target="_blank"><%= uni_info.email %></p></a>
             &nbsp;
-            <i class="fa-solid fa-phone" style="color: #2907eb;"></i>
-            <p class="mb-0 ms-3" style="display: inline;"><%= uni_info.phone %></p>
-            <hr class="star-white mb-5" style="display: inline-block;">
           </div>
         </div>
         <div class="row">
@@ -64,8 +69,8 @@
                 <dicv class="d-flex justify-content-center">
                   <div class="star-rating">
                     <span style="font-weight: bold;">Eğitim</span>
-                    <% for (let index = 1; index < 10; index++) { %>
-                    <button type="button" class="star-btn" data-value="<%= index%>">
+                    <% for (let index = 0; index < 10; index++) { %>
+                    <button type="button" class="star-btn"  value="edu" data-value="<%= index+1 %>">
                       <i class="bi bi-star-fill"></i>
                     </button>
                     <% } %>
@@ -75,8 +80,8 @@
                 <div class="d-flex justify-content-center">
                   <div class="star-rating">
                     <span style="font-weight: bold;">Barınma</span>
-                    <% for (let index = 1; index < 10; index++) { %>
-                    <button type="button" class="star-btn" data-value="<%= index%>">
+                    <% for (let index = 0; index < 10; index++) { %>
+                    <button type="button" class="star-btn" value="dorm" data-value="<%= index+1 %>">
                       <i class="bi bi-star-fill"></i>
                     </button>
                     <% } %>
@@ -86,8 +91,8 @@
                 <div class="d-flex justify-content-center">
                   <div class="star-rating">
                     <span style="font-weight: bold;">Ulaşım</span>
-                    <% for (let index = 1; index < 10; index++) { %>
-                    <button type="button" class="star-btn" data-value="<%= index %>">
+                    <% for (let index = 0; index < 10; index++) { %>
+                    <button type="button" class="star-btn" value="transportation" data-value="<%= index+1 %>">
                       <i class="bi bi-star-fill"></i>
                     </button>
                     <% } %>
@@ -97,17 +102,18 @@
                 <div class="d-flex justify-content-center">
                   <div class="star-rating">
                     <span style="font-weight: bold;">Kampüs</span>
-                    <% for (let index = 1; index < 10; index++) { %>
-                    <button type="button" class="star-btn" data-value="<%= index %>">
+                    <% for (let index = 0; index < 10; index++) { %>
+                    <button type="button" class="star-btn" value="campus" data-value="<%= index+1 %>">
                       <i class="bi bi-star-fill"></i>
                     </button>
                     <% } %>
                   </div>
                 </div>
-                <div >
-                  <button type="button" class="btn btn-primary btn-sm float-end 2 mt-2">Oyları Gönder</button>
-                </div>
-                
+                <div>
+                <% if (!isRated) { %>  
+                    <button type="button" class="btn btn-primary btn-sm float-end 2 mt-2" onclick="giveRating('<%= uni_info._id %>')">Oyları Gönder</button> 
+                <% } %>
+              </div>
               </div>
             </div>
         
@@ -300,10 +306,64 @@
   </div>
 </footer>
 
-</body>
-
+<% if (!isRated) { %>
   <script>
-    addStarRatingEvent();
+    addStarRatingEvent()
   </script>
+  <%} else { %>
+    <script>
+      const ratingSections = document.querySelectorAll('.star-rating');
+    
+    ratingSections.forEach((section) => {
+      const ratingButtons = section.querySelectorAll('.star-btn');
+      
+      ratingButtons.forEach((button) => {
+        let selectedRating = 0;
+        if(button.getAttribute("value") === "dorm"){
+          selectedRating = <%= uni_info.dorm_point / uni_info.rate_count %>
+        }
+        else if(button.getAttribute("value") === "edu"){
+          selectedRating = <%= uni_info.edu_point / uni_info.rate_count %>
+        }
+        else if(button.getAttribute("value") === "transportation"){
+          selectedRating = <%= uni_info.trans_point / uni_info.rate_count %>
+        }
+        else{
+          selectedRating = <%= uni_info.campus_point / uni_info.rate_count %>
+        }
+          ratingButtons.forEach((btn) => {
+            const ratingValue = btn.dataset.value-1;
+            const starIcon = btn.querySelector('i');
+  
+            if (ratingValue <= selectedRating-1) {
+              btn.classList.add('selected');
+              starIcon.classList.remove('bi-star');
+              starIcon.classList.add('bi-star-fill');
+            } else {
+              btn.classList.remove('selected');
+              starIcon.classList.remove('bi-star-fill');
+              starIcon.classList.add('bi-star');
+            }
+            
+          }); 
+          switch(button.getAttribute("value")){
+            case "edu":
+              edu_point = selectedRating;
+              break;
+            case "dorm": 
+              dorm_point = selectedRating;
+              break;
+            case "campus":
+              campus_point = selectedRating
+              break;
+            case "transportation":
+              trans_point = selectedRating
+              break;
+          }
+      });
+    });
+    </script>
+  <% } %>
+</body>
 
 </html>
