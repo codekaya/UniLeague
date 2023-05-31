@@ -61,11 +61,11 @@
               <div class="card-body">
                 <h5 class="card-title" style="text-align: center;">Öğrenci Puanlamaları</h5>
 
-                <div class="d-flex justify-content-center">
+                <dicv class="d-flex justify-content-center">
                   <div class="star-rating">
                     <span style="font-weight: bold;">Eğitim</span>
-                    <% for (let index = 0; index < 10; index++) { %>
-                    <button type="button" class="star-btn" data-value="<%= index + 1 %>">
+                    <% for (let index = 1; index < 10; index++) { %>
+                    <button type="button" class="star-btn" data-value="<%= index%>">
                       <i class="bi bi-star-fill"></i>
                     </button>
                     <% } %>
@@ -75,8 +75,8 @@
                 <div class="d-flex justify-content-center">
                   <div class="star-rating">
                     <span style="font-weight: bold;">Barınma</span>
-                    <% for (let index = 0; index < 10; index++) { %>
-                    <button type="button" class="star-btn" data-value="<%= index + 1 %>">
+                    <% for (let index = 1; index < 10; index++) { %>
+                    <button type="button" class="star-btn" data-value="<%= index%>">
                       <i class="bi bi-star-fill"></i>
                     </button>
                     <% } %>
@@ -86,8 +86,8 @@
                 <div class="d-flex justify-content-center">
                   <div class="star-rating">
                     <span style="font-weight: bold;">Ulaşım</span>
-                    <% for (let index = 0; index < 10; index++) { %>
-                    <button type="button" class="star-btn" data-value="<%= index + 1 %>">
+                    <% for (let index = 1; index < 10; index++) { %>
+                    <button type="button" class="star-btn" data-value="<%= index %>">
                       <i class="bi bi-star-fill"></i>
                     </button>
                     <% } %>
@@ -97,18 +97,20 @@
                 <div class="d-flex justify-content-center">
                   <div class="star-rating">
                     <span style="font-weight: bold;">Kampüs</span>
-                    <% for (let index = 0; index < 10; index++) { %>
-                    <button type="button" class="star-btn" data-value="<%= index + 1 %>">
+                    <% for (let index = 1; index < 10; index++) { %>
+                    <button type="button" class="star-btn" data-value="<%= index %>">
                       <i class="bi bi-star-fill"></i>
                     </button>
                     <% } %>
                   </div>
                 </div>
-        
-                <button type="button" class="btn btn-primary btn-sm float-end mt-2">Oyları Gönder</button>
+                <div >
+                  <button type="button" class="btn btn-primary btn-sm float-end 2 mt-2">Oyları Gönder</button>
+                </div>
+                
               </div>
             </div>
-          </div>
+        
         
           <div class="col-lg-6 justify-content-center py-5">
             <div class="card py">
@@ -129,7 +131,7 @@
             </div>
           </div>
         </div>
-
+      </div>
         
 
         <section id="commentSection" style="background-color: #eee;">
