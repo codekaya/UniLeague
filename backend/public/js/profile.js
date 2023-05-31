@@ -13,7 +13,7 @@ async function editPhone(id) {
           'Cookie' : 'access-token='
         },
         body: JSON.stringify({
-            email: newPhone
+            phone: newPhone
           })
         });
     }

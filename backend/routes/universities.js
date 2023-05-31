@@ -13,9 +13,11 @@ router.route('/').get(async (req,res)=>{
     try {
         const uni = await University.findById(req.query.id)
         const uni_comment = await Comment.find({ uni_id: req.query.id })
+        const user = await User.find({},{_id:1,name:1,last_name:1,uni_id:1})
         res.render("university_page",{
             uni_info:uni,
-            comment_info: uni_comment
+            comment_info: uni_comment,
+            user_info:user,
           })
     } catch (e) {
         const error = e;
@@ -45,6 +47,7 @@ router.route('/rate').post(async (req,res)=>{
                 return res.send({success:false,error:{name:'Not member of this university'}})
         }
         
+        console.log(req.body)
         edu_point_fe = parseInt(req.body.edu_point)
         dorm_point_fe = parseInt(req.body.dorm_point)
         trans_point_fe = parseInt(req.body.trans_point)
@@ -60,7 +63,7 @@ router.route('/rate').post(async (req,res)=>{
                 unileague_point: (edu_point_fe + dorm_point_fe + trans_point_fe + campus_point_fe) / 4,
             }
         }, { new: true })
-        const newRatingPoints = [edu_point_fe,dorm_point_fe,trans_point_fe,campus_point_fe]
+        const newRatingPoints = [edu_point_fe]
         await User.updateOne(
             { _id: user._id },
             { $push: { ratingPoints: { $each: newRatingPoints } },
@@ -86,29 +89,36 @@ router.route('/new_comment').post(async (req,res)=>{
     
         const accessToken = req.cookies["access-token"];
         const token = verify(accessToken , process.env.JWT_SECRET);    
-        const { username, content} = req.body;
+        const {content, conversation_id} = req.body;
+        
+        console.log(req.body)
 
         const user = await User.findOne( {_id: token.id});
         user_id = user._id
 
+        if (!user.isValidated){
+            return res.send({success:false,error:{name:'E posta onayı yapmadınız!'}})
+        } 
 
         const uni = await University.findById(req.query.id)
         uni_id = uni._id
         
         const comment = new Comment({
-          username,
           content,
           uni_id,
-          user_id
+          user_id,
+          conversation_id,
         });
         await comment.save();
         res.send({success:true});
     } catch (e) {
         if(e.name === 'JsonWebTokenError'){
-            return res.send({success:true,error:{name:'NotAuthorized'}});
+            console.log('asdasd')
+            return res.send({success:false,error:{name:'NotAuthorized'}}); 
+           
         }
         const error = e;
-        //console.log(e)
+        console.log(e)
         res.send({success: false, error: error }).status(400)   
     }
 
