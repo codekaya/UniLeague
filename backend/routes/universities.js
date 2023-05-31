@@ -52,18 +52,23 @@ router.route('/rate').post(async (req,res)=>{
         const user = await User.findOne( {_id: token.id});
         const uni = await University.findById({ _id: req.query.id })
 
-        
+
+        if (!user.isValidated){
+            return res.send({success:false,error:{name:'Puan vermek için mail adresinizi onaylamalısınız!'}})
+        }
+
         if (!user.isUniStudent){
-            return res.send({success:false,error:{name:'You can not vote.'}})
+            return res.send({success:false,error:{name:'Sadece üniversite öğrencileri puan verebilir!'}})
         }
-        if (user.isRated && (user.uni_id == uni._id) ) {
-                return res.send({success:false,error:{name:'Already Voted'}})
-            }
-    
+
         if (!(user.uni_id == uni._id)){
-                return res.send({success:false,error:{name:'Not member of this university'}})
-        }
-        
+            return res.send({success:false,error:{name:'Bu üniversite öğrencisi değilsiniz!'}})
+    }
+
+        if (user.isRated && (user.uni_id == uni._id) ) {
+                return res.send({success:false,error:{name:'Daha öneceden puan verdiniz!'}})
+            }
+
         console.log(req.body)
         edu_point_fe = parseInt(req.body.edu_point)
         dorm_point_fe = parseInt(req.body.dorm_point)
@@ -71,7 +76,7 @@ router.route('/rate').post(async (req,res)=>{
         campus_point_fe = parseInt(req.body.campus_point)
         if(edu_point_fe <= 0 || dorm_point_fe <= 0 || trans_point_fe <= 0 || campus_point_fe <= 0 || 
             edu_point_fe > 10 || dorm_point_fe > 10 || trans_point_fe > 10 || campus_point_fe > 10 ){
-                return res.send({success:false,error:{name:'Rate should be between 1 and 10'}})
+                return res.send({success:false,error:{name:'Lüten puanlarınızı 1 ile 10 arasında giriniz!'}})
             }
         const result = await University.findOneAndUpdate({_id : req.query.id},{
             $inc : {
@@ -95,7 +100,7 @@ router.route('/rate').post(async (req,res)=>{
     } catch (e) {
         if(e.name === 'JsonWebTokenError'){
             redirectUrl = `/university/?id=${req.query.id}`;
-            return res.send({success:false,error:{name:"You need to login to rate"}});
+            return res.send({success:false,error:{name:"Puan vermek için giriş yapmalısınız!"}});
         }
         const error = e;
         res.send({success: false, error: error }).status(400)   
@@ -117,7 +122,7 @@ router.route('/new_comment').post(async (req,res)=>{
         user_id = user._id
 
         if (!user.isValidated){
-            return res.send({success:false,error:{name:'E posta onayı yapmadınız!'}})
+            return res.send({success:false,error:{name:'Yorum yapmak için kayıt olmalısınız!'}})
         } 
 
         const uni = await University.findById(req.query.id)
@@ -133,8 +138,7 @@ router.route('/new_comment').post(async (req,res)=>{
         res.send({success:true});
     } catch (e) {
         if(e.name === 'JsonWebTokenError'){
-            console.log('asdasd')
-            return res.send({success:false,error:{name:'NotAuthorized'}}); 
+            return res.send({success:false,error:{name:'Giriş yapmalısınız!'}}); 
            
         }
         const error = e;
