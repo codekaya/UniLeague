@@ -183,13 +183,26 @@
                 <div class="card my-3">
                   <div class="card-body">
                    
-                      <div class="d-flex flex-start align-items-center">
-                        <img class="rounded-circle shadow-1-strong me-3"
-                          src="/images/comment_img.png" alt="avatar" width="60"
-                          height="60" />
-                        <div>
-  
-                        
+                  
+                 <% if (normal_comment.isCommentedbyUniStudent) { %>
+
+                  <div class="d-flex flex-start align-items-center">
+                    <img class="rounded-circle shadow-1-strong me-3"
+                      src="/images/comment_img.png" alt="avatar" width="60"
+                      height="60" />
+                    <div>
+                  
+                 <% } else { %>
+
+                  <div class="d-flex flex-start align-items-center">
+                    <img class="rounded-circle shadow-1-strong me-3"
+                      src="/images/aday.png" alt="avatar" width="60"
+                      height="60" />
+                    <div>
+                 
+                 %>
+                      
+                 <% } %>      
                     
                        <% user_info.forEach(user => { %>
                           <% if (user._id == normal_comment.user_id) { %>
@@ -197,7 +210,8 @@
                               <a href="/user/profile/<%= user._id %>">
                                 <%= user.name %> <%= user.last_name %>
                               </a>
-                              <% if (normal_comment.uni_id == user.uni_id) { %>
+                              
+                              <% if (normal_comment.uni_id == user.uni_id && user.isUniStudent) { %>
                                 <div class="overlay">
                                   <i class="fa-regular fa-circle-check" style="color:red;"></i>
                                 </div>
@@ -249,11 +263,22 @@
                         <% if (normal_comment._id == comment.conversation_id) { %>
         
                           <div class="d-flex flex-start mt-4">
-                            <a class="me-3" href="#">
-                              <img class="rounded-circle shadow-1-strong"
+
+                              <% if (comment.isCommentedbyUniStudent) { %>
+
+                                <img class="rounded-circle shadow-1-strong"
                               src="/images/comment_img.png" alt="avatar"
                                 width="65" height="65" />
-                            </a>
+                                
+                              <% } else { %>
+
+                          
+                                <img class="rounded-circle shadow-1-strong"
+                                src="/images/aday.png" alt="avatar"
+                                width="65" height="65" />
+                              <% } %>
+
+
                             <div class="flex-grow-1 flex-shrink-1">
                               <div>
                                 <div class="d-flex justify-content-between align-items-center">
@@ -265,7 +290,7 @@
                                        
                                         <a href="/user/profile/<%= user._id %>"><%= user.name %> <%= user.last_name %>
                                         </a>
-                                        <% if (comment.uni_id == user.uni_id) { %>
+                                        <% if (comment.uni_id == user.uni_id && user.isUniStudent ) { %>
                                             <i class="fa-regular fa-circle-check" style="color:red;"></i>  
                                         <% } %>
                                         &nbsp&nbsp<span class="small"><%= comment.createdAt.toLocaleString('tr-TR', { day: 'numeric',month: 'long', hour: 'numeric', minute: 'numeric' }) %></span>

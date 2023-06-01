@@ -31,7 +31,12 @@ const commentSchema = new Schema({
       dislikes: {
         type: Array,
         default: []
-      }
+      },
+      isCommentedbyUniStudent: {
+        type: Boolean,
+        default: false,
+        required: true
+      },
     });
 
 const Comment = mongoose.model('Comment', commentSchema);

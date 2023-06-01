@@ -13,7 +13,9 @@ router.route('/').get(async (req,res)=>{
     try {
         const uni = await University.findById(req.query.id)
         const uni_comment = await Comment.find({ uni_id: req.query.id })
-        const user = await User.find({},{_id:1,name:1,last_name:1,uni_id:1})
+        const user = await User.find({},{_id:1,name:1,last_name:1,uni_id:1,isUniStudent:1})
+
+
         let loggedUserId = null;
         try {
             const accessToken = req.cookies["access-token"];
@@ -128,12 +130,16 @@ router.route('/new_comment').post(async (req,res)=>{
         const uni = await University.findById(req.query.id)
         uni_id = uni._id
         
+        
         const comment = new Comment({
           content,
           uni_id,
           user_id,
           conversation_id,
+     
         });
+
+        comment.isCommentedbyUniStudent = user.isUniStudent;
         await comment.save();
         res.send({success:true});
     } catch (e) {
