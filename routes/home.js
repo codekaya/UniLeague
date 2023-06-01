@@ -79,11 +79,16 @@ router.route('/comparison').get(async (req,res)=>{
 
 router.route('/verification').get(async (req,res)=>{
 
-    const accessToken = req.cookies["access-token"];
-    const token = verify(accessToken , process.env.JWT_SECRET);
-    res.render('verification',{
- 
-    })
+    try {
+        const accessToken = req.cookies["access-token"];
+        const token = verify(accessToken , process.env.JWT_SECRET);
+        res.render('verification',{
+            userType:"loggedIn"
+        })
+    } catch (error) {
+        res.redirect("/")
+    }
+    
      
  });
 
