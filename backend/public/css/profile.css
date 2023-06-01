@@ -33,3 +33,7 @@
 textarea {
     resize: none;
   }
+
+.profile-form{
+    display: none;
+}

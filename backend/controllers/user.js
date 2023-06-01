@@ -42,16 +42,21 @@ function decrypt(ciphertext){
   }
 
 
-function isEmailValid(email) {
+function isEmailValid(email,isUniStudent) {
     var emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
-
+    var eduRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.+-]+\.edu$/
+    var eduTrRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.+-]+\.edu\.tr$/
     if (!email)
         return false;
-
     if(email.length>254)
         return false;
-
-    var valid = emailRegex.test(email);
+    let valid = false;
+     if(!isUniStudent){
+        valid = emailRegex.test(email);
+    }
+    else{
+        valid = eduRegex.test(email) || eduTrRegex.test(email)
+    }
     if(!valid)
         return false;
     var parts = email.split("@");
@@ -67,8 +72,7 @@ function isEmailValid(email) {
 
 const register = async(email, unhashed,name,last_name,isUniStudent,uni_id,) =>{
     try{
-        if(isUniStudent)
-        if(!isEmailValid(email)){ return {success: false, error: "GEÇERSİZ EMAİL"}}
+        if(!isEmailValid(email,isUniStudent)){ return {success: false, error: "GEÇERSİZ EMAİL"}}
         if(unhashed.length>40 || unhashed.length<14){return {success: false, error: "ŞİFRE UZUNLUGU 14 İLE 40 KARAKTER ARASINDA OLMALI"}}
         const hash = await bcrypt.hash(unhashed, 10)
         const password = hash;
