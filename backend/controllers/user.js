@@ -72,7 +72,7 @@ function isEmailValid(email,isUniStudent) {
 
 const register = async(email, unhashed,name,last_name,isUniStudent,uni_id,) =>{
     try{
-        if(!isEmailValid(email,isUniStudent)){ return {success: false, error: "GEÇERSİZ EMAİL"}}
+        if(!isEmailValid(email,isUniStudent)){ return {success: false, error: "LÜTFEN ÜNİVERSİTE EMAİL'İNİ KULLANINIZ"}}
         if(unhashed.length>40 || unhashed.length<14){return {success: false, error: "ŞİFRE UZUNLUGU 14 İLE 40 KARAKTER ARASINDA OLMALI"}}
         const hash = await bcrypt.hash(unhashed, 10)
         const password = hash;

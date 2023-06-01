@@ -122,7 +122,7 @@ router.route('/new_comment').post(async (req,res)=>{
         user_id = user._id
 
         if (!user.isValidated){
-            return res.send({success:false,error:{name:'Yorum yapmak için kayıt olmalısınız!'}})
+            return res.send({success:false,error:{name:'Yorum yapmak için mail adresinizi onaylamalısınız!'}})
         } 
 
         const uni = await University.findById(req.query.id)
@@ -169,7 +169,7 @@ router.route('/like_comment').get(async (req,res)=>{
         const token = verify(accessToken , process.env.JWT_SECRET);
         const comment = await Comment.findById(req.query.id)
         if(comment.likes.includes(token.id)){
-            throw {name:"You have already liked this comment"}
+            throw {name:"Bu yorumu daha önce zaten beğendiniz!"}
         }
         comment.likes.push(token.id)
         comment.dislikes = comment.dislikes.filter(e=>e !== token.id) // Dislike listesinden çıkarıyor
@@ -190,7 +190,7 @@ router.route('/dislike_comment').get(async (req,res)=>{
         
         const comment = await Comment.findById(req.query.id)
         if(comment.dislikes.includes(token.id)){
-            throw {name:"You have already disliked this comment"}
+            throw {name:"Bu yorumu zaten daha önce beğenmediniz!"}
         }
         comment.dislikes.push(token.id)
         comment.likes = comment.likes.filter(e=>e !== token.id) // like listesinden çıkarıyor

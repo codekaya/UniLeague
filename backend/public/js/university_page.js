@@ -12,7 +12,9 @@ async function likeComment(commentId) {
         element2.innerHTML = `<i class="far fa-thumbs-down me-2"></i>&nbsp;${data.dislikeCount}`;
       }
       else{
-        alert(data.error.name)
+        const errorMessage = data.error.name;
+        document.getElementById("errorMessage").textContent = errorMessage;
+        $('#errorModal').modal('show');
       }
     });
 }
@@ -30,7 +32,9 @@ async function dislikeComment(commentId) {
         element2.innerHTML = `<i class="far fa-thumbs-down me-2"></i>&nbsp;${data.dislikeCount}`;
       }
       else{
-        alert(data.error.name)
+        const errorMessage = data.error.name;
+        document.getElementById("errorMessage").textContent = errorMessage;
+        $('#errorModal').modal('show');
       }
     });
 }
@@ -45,7 +49,9 @@ async function deleteComment(commentId) {
         document.getElementById(commentId).remove()
       }
       else{
-        alert(data.error.name)
+        const errorMessage = data.error.name;
+        document.getElementById("errorMessage").textContent = errorMessage;
+        $('#errorModal').modal('show');
       }
     });
 }
@@ -71,21 +77,12 @@ async function addComment(uni_id,conversation_id,content_section){
     response.json().then(data => {
 
       if(data.success){
-
         location.reload();
-
-        /*
-        if (content_section.includes('comment_reply_text')){
-
-          console.log('rply')
-          var comment_id = content_section.split("_")[0];
-          console.log(comment_id)
-          replySection(comment_id)
-        }
-        */
       }
       else{
-        alert(data.error.name)
+        const errorMessage = data.error.name;
+        document.getElementById("errorMessage").textContent = errorMessage;
+        $('#errorModal').modal('show');
       }
     });
     
@@ -117,7 +114,9 @@ async function giveRating(uni_id){
         location.reload();
       }
       else{
-        alert(data.error.name)
+        const errorMessage = data.error.name;
+        document.getElementById("errorMessage").textContent = errorMessage;
+        $('#errorModal').modal('show');
       }
     });
 }
