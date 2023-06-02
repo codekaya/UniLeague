@@ -1,6 +1,6 @@
 
 async function likeComment(commentId) {
-  const response = await fetch(`http://localhost:5000/university/like_comment?id=${commentId}`, {
+  const response = await fetch(`/university/like_comment?id=${commentId}`, {
     credentials:'include',
     method: 'GET'
     });
@@ -20,7 +20,7 @@ async function likeComment(commentId) {
 }
 
 async function dislikeComment(commentId) {
-  const response = await fetch(`http://localhost:5000/university/dislike_comment?id=${commentId}`, {
+  const response = await fetch(`/university/dislike_comment?id=${commentId}`, {
     credentials:'include',
     method: 'GET'
     });
@@ -40,7 +40,7 @@ async function dislikeComment(commentId) {
 }
 
 async function deleteComment(commentId) {
-    const response = await fetch(`http://localhost:5000/university/delete_comment?id=${commentId}`, {
+    const response = await fetch(`/university/delete_comment?id=${commentId}`, {
     credentials:'include',
     method: 'GET'
     });
@@ -60,7 +60,7 @@ async function addComment(uni_id,conversation_id,content_section){
   console.log(conversation_id)
   const conversation_id_json = JSON.stringify(conversation_id);
  
-  const response = await fetch(`http://localhost:5000/university/new_comment?id=${uni_id}`, {
+  const response = await fetch(`/university/new_comment?id=${uni_id}`, {
     
     credentials:'include',
     headers:{
@@ -94,7 +94,7 @@ async function giveRating(uni_id){
     edu_point > 10 || dorm_point > 10 || trans_point > 10 || campus_point > 10 ){
         return alert('Rates should be between 0 and 1')
     }
-  const response = await fetch(`http://localhost:5000/university/rate?id=${uni_id}`, {
+  const response = await fetch(`/university/rate?id=${uni_id}`, {
     credentials:'include',
     headers:{
       'Accept': 'application/json',
@@ -286,7 +286,7 @@ function addStarRatingEvent() {
 }
 
 async function logout(){
-  const response = await fetch("http://localhost:5000/user/logout", {
+  const response = await fetch(`/user/logout`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

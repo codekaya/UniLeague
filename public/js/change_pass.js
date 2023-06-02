@@ -5,7 +5,7 @@ async function changePassword(){
       newPassword: document.getElementById('newPassword').value,
     };
   
-    const response = await fetch(`http://localhost:5000/user/changePassword`, {
+    const response = await fetch(`/user/changePassword`, {
         credentials:'include',
         headers:{
           'Accept': 'application/json',

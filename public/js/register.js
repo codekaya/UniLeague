@@ -29,7 +29,7 @@ async function register(event){
             errorContainer.appendChild(errorMessage);
     return
   }
-  const response = await fetch(`http://localhost:5000/user/register`, {
+  const response = await fetch(`/user/register`, {
     credentials:'include',
     headers:{
       'Accept': 'application/json',

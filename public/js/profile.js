@@ -5,7 +5,7 @@ async function editPhone(id) {
 
     if (newPhone) {
       nameParagraph.innerText = newPhone;
-      const response = await fetch("http://localhost:5000/user/changePhoneNumber", {
+      const response = await fetch(`/user/changePhoneNumber`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -26,7 +26,7 @@ async function editFaculty() {
 
   if (newFaculty) {
     nameParagraph.innerText = newFaculty;
-    const response = await fetch("http://localhost:5000/user/changeFaculty", {
+    const response = await fetch(`/user/changeFaculty`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -47,7 +47,7 @@ async function editAddress() {
 
   if (newAddress) {
     nameParagraph.innerText = newAddress;
-    const response = await fetch("http://localhost:5000/user/changeAddress", {
+    const response = await fetch(`/user/changeAddress`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -112,7 +112,7 @@ async function submitSmForm(event){
     instagram: inputTags[3].value,
     face:inputTags[4].value
   }
-  const response = await fetch("http://localhost:5000/user/updateSocialMedia", {
+  const response = await fetch(`/user/updateSocialMedia`, {
       method: 'POST',
       credentials:'include',
       headers: {
@@ -126,7 +126,7 @@ async function submitSmForm(event){
 
 async function submitAbForm(event){
   event.preventDefault();
-  const response = await fetch("http://localhost:5000/user/changeAbout", {
+  const response = await fetch(`/user/changeAbout`, {
       method: 'POST',
       credentials:'include',
       headers: {
@@ -141,7 +141,7 @@ async function submitAbForm(event){
 }
 
 async function logout(){
-  const response = await fetch("http://localhost:5000/user/logout", {
+  const response = await fetch(`/user/logout`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
