@@ -11,13 +11,12 @@ const bodyParser = require('body-parser');
 
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 
 var corsOptions = {
-    origin: `unileague.onrender.com`,
-    credentials: true
-  };
-
+    origin: 'http://localhost:5000',
+    credentials:  true
+  }
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());

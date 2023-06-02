@@ -1,7 +1,7 @@
 async function login(event){
     event.preventDefault();
     const formData = new FormData(document.getElementById('form'))
-    const response = await fetch(`/user/login`, {
+    const response = await fetch("http://localhost:5000/user/login", {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

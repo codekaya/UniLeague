@@ -1,5 +1,5 @@
 async function logout(){
-  const response = await fetch(`/user/logout`, {
+  const response = await fetch("http://localhost:5000/user/logout", {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

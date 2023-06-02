@@ -5,7 +5,7 @@ let confirm_password
 async function sendVerificationCode(event){
     event.preventDefault()
     const emailTag = document.getElementById('form2Example17');
-    const response = await fetch(`/user/getEmailCode`, {
+    const response = await fetch("http://localhost:5000/user/getEmailCode", {
         method: 'POST',
         credentials: "include",
         headers: {
@@ -54,7 +54,7 @@ document.getElementById('form').addEventListener('submit',sendVerificationCode)
 async function changePassword(event){
     event.preventDefault();
     const formData = new FormData(document.getElementById('form'))
-    const response = await fetch(`/user/resetPassword`, {
+    const response = await fetch("http://localhost:5000/user/resetPassword", {
         method: 'POST',
         credentials: "include",
         headers: {

@@ -12,7 +12,7 @@ async function sendEmailCode() {
   var afterText = document.getElementById("after_text");
   afterText.style.display = "block";
   
-  const response = await fetch(`/user/getEmailCode`, {
+  const response = await fetch(`http://localhost:5000/user/getEmailCode`, {
     credentials:'include',
     method: 'GET'
     });
@@ -35,7 +35,7 @@ async function checkVerifyCode() {
   var verification_code = document.getElementById("verificatin_code");
   verification_code= verification_code.value
   if (verification_code) {
-    const response = await fetch(`/user/emailVerify`, {
+    const response = await fetch("http://localhost:5000/user/emailVerify", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
